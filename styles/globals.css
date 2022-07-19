@@ -178,6 +178,10 @@
 }
 
 @media (min-width: 900px) {
+  .feed-wrapper {
+    flex-wrap: wrap;
+  }
+
   .feed-wrapper .feed-item {
     flex: 0 0 50%;
     max-width: 50%;
