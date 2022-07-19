@@ -1,0 +1,71 @@
+/* sansita-swashed-800 - latin */
+@font-face {
+  font-family: "Sansita Swashed";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/sansita-swashed-v1-latin-800.eot");
+  src: url("/fonts/sansita-swashed-v1-latin-800.eot?#iefix")
+      format("embedded-opentype"),
+    url("/fonts/sansita-swashed-v1-latin-800.woff2") format("woff2"),
+    url("/fonts/sansita-swashed-v1-latin-800.woff") format("woff"),
+    url("/fonts/sansita-swashed-v1-latin-800.ttf") format("truetype"),
+    url("/fonts/sansita-swashed-v1-latin-800.svg#SansitaSwashed") format("svg");
+}
+
+/* roboto-slab-300 - vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic */
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-300.eot");
+  src: url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-300.eot?#iefix")
+      format("embedded-opentype"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-300.woff2")
+      format("woff2"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-300.woff")
+      format("woff"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-300.ttf")
+      format("truetype"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-300.svg#RobotoSlab")
+      format("svg");
+}
+
+/* roboto-slab-regular - vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic */
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-regular.eot");
+  src: url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-regular.woff2")
+      format("woff2"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-regular.woff")
+      format("woff"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-regular.ttf")
+      format("truetype"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-regular.svg#RobotoSlab")
+      format("svg");
+}
+
+/* roboto-slab-700 - vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic */
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-700.eot");
+  src: url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-700.eot?#iefix")
+      format("embedded-opentype"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-700.woff2")
+      format("woff2"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-700.woff")
+      format("woff"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-700.ttf")
+      format("truetype"),
+    url("/fonts/roboto-slab-v12-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-700.svg#RobotoSlab")
+      format("svg");
+}

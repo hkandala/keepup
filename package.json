@@ -6,7 +6,8 @@
   "keywords": [
     "news-aggregator",
     "news-feed",
-    "trends"
+    "trends",
+    "technology"
   ],
   "license": "MIT",
   "author": "Harish Kandala",
@@ -15,10 +16,13 @@
     "dev:debug": "set NODE_OPTIONS=--inspect && next dev",
     "build": "next build",
     "start": "next start",
+    "format": "prettier --write .",
     "lint": "next lint",
     "migrate": "prisma db push"
   },
   "dependencies": {
+    "@geist-ui/core": "^2.3.8",
+    "@geist-ui/icons": "^1.0.2",
     "@next-auth/prisma-adapter": "^1.0.3",
     "@prisma/client": "^4.0.0",
     "axios": "^0.27.2",
@@ -37,6 +41,10 @@
     "@types/cheerio": "^0.22.31",
     "@types/node": "^18.0.6",
     "@types/react": "^18.0.15",
+    "eslint": "^8.20.0",
+    "eslint-config-next": "^12.2.2",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
     "prisma": "^4.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.7.4"

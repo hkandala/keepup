@@ -1,12 +1,103 @@
+import { useCallback, useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
+import Image from "next/image";
+import { Settings, ExternalLink, Github, X } from "@geist-ui/icons";
+import {
+  GeistProvider,
+  CssBaseline,
+  Modal,
+  Radio,
+  Divider,
+  useModal,
+  Link,
+} from "@geist-ui/core";
 
-const App = ({ Component, pageProps }: AppProps) => {
+import "../styles/globals.css";
+import lightTheme from "../themes/light";
+import darkTheme from "../themes/dark";
+
+function MyApp({ Component, pageProps }: AppProps) {
+  const [themeType, setThemeType] = useState("light");
+
+  const setTheme = useCallback(
+    (theme) => {
+      if ((theme === "light" || theme === "dark") && themeType !== theme) {
+        window.localStorage.setItem("theme", theme);
+        setThemeType(theme);
+      }
+    },
+    [themeType]
+  );
+
+  useEffect(() => {
+    const isSystemDarkMode =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const storedTheme = window.localStorage.getItem("theme");
+    if ((!storedTheme && isSystemDarkMode) || storedTheme == "dark") {
+      setTheme("dark");
+    }
+  }, [setTheme]);
+
+  const { visible, setVisible, bindings } = useModal();
+
   return (
     <SessionProvider session={pageProps.session}>
-      <Component {...pageProps} />
+      <GeistProvider
+        themes={[lightTheme, darkTheme]}
+        themeType={themeType == "dark" ? "custom-dark" : "custom-light"}
+      >
+        <CssBaseline />
+
+        <Link href="/" className="logo">
+          <Image
+            src="/icons/icon-192x192.png"
+            width={32}
+            height={32}
+            alt="keepup logo"
+          />
+        </Link>
+
+        <div className="settings-icon" onClick={() => setVisible(true)}>
+          <Settings size={20} />
+        </div>
+
+        <Modal {...bindings}>
+          <Modal.Title>Settings</Modal.Title>
+
+          <Modal.Content>
+            <Divider my={2.5} />
+            <Radio.Group
+              className="center"
+              value={themeType}
+              onChange={setTheme}
+              useRow
+            >
+              <Radio value="light">Light</Radio>
+              <Radio value="dark">Dark</Radio>
+            </Radio.Group>
+          </Modal.Content>
+
+          <Modal.Action>
+            <Link href="https://hkandala.dev/" target="_blank">
+              <ExternalLink size={20} className="button-link" />
+            </Link>
+          </Modal.Action>
+          <Modal.Action>
+            <Link href="https://github.com/hkandala/keep-up" target="_blank">
+              <Github size={20} className="button-link" />
+            </Link>
+          </Modal.Action>
+          <Modal.Action onClick={() => setVisible(false)}>
+            <X />
+          </Modal.Action>
+        </Modal>
+
+        <Component {...pageProps} />
+      </GeistProvider>
     </SessionProvider>
   );
-};
+}
 
-export default App;
+export default MyApp;
