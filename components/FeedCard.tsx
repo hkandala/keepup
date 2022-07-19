@@ -60,7 +60,7 @@ export default function FeedCard(props) {
   if (items.isFetching) {
     feedContent = (
       <div className="center" style={{ height: height.spinner }}>
-        <Spinner className="large" />
+        <Spinner scale={2} />
       </div>
     );
   } else if (items.feedItems.length == 0) {
@@ -75,7 +75,7 @@ export default function FeedCard(props) {
         <div className="list-item">
           <div className="badge-wrapper">
             <a href={item.url} target="_blank" rel="noreferrer">
-              <Badge className="small">{item.score}</Badge>
+              <Badge scale={0.75}>{item.score}</Badge>
             </a>
           </div>
           <div
@@ -128,7 +128,9 @@ export default function FeedCard(props) {
           initialValue={defaultType.toString()}
           onChange={fetchItems}
           disableMatchWidth
-          className="small"
+          scale={0.6}
+          width="125px"
+          style={{ minWidth: "125px" }}
         >
           {props.endpoints.map((endpoint, index) => (
             <Select.Option value={index.toString()} key={index}>
