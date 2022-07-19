@@ -9,14 +9,20 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export function redditIndex(subreddit?: string): Index {
-  let title = "r/{}";
+  const name = "Reddit";
+  const categoryName = "Subreddit";
+  const title = "r/{}";
   if (subreddit != null) {
     return {
+      name,
+      categoryName,
       title: title.replace("{}", subreddit),
       endpoints: getEndpointListFromSubType(subreddit, getEndpointList()),
     };
   } else {
     return {
+      name,
+      categoryName,
       title,
       endpoints: getEndpointList(),
     };

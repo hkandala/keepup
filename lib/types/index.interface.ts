@@ -1,4 +1,6 @@
 export interface Index {
+  name: string;
+  categoryName: string;
   title: string;
   endpoints: Endpoint[];
 }
