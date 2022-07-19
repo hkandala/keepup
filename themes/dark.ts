@@ -5,6 +5,7 @@ export default Themes.createFromDark({
   palette: {
     accents_1: "#424242",
     accents_2: "#424242",
+    accents_5: "#fafafa",
     background: "#35363a",
     foreground: "#fafafa",
     selection: "#79ffe1",

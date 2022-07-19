@@ -2,15 +2,23 @@ import { useCallback, useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 import Image from "next/image";
-import { Settings, ExternalLink, Github, X } from "@geist-ui/icons";
+import {
+  Github,
+  Grid,
+  Bookmark,
+  Clock,
+  Sliders,
+  Sun,
+  Moon,
+  Info,
+} from "@geist-ui/icons";
 import {
   GeistProvider,
   CssBaseline,
-  Modal,
-  Radio,
   Divider,
-  useModal,
   Link,
+  Popover,
+  Button,
 } from "@geist-ui/core";
 
 import "../styles/globals.css";
@@ -21,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [themeType, setThemeType] = useState("light");
 
   const setTheme = useCallback(
-    (theme) => {
+    (theme: "light" | "dark") => {
       if ((theme === "light" || theme === "dark") && themeType !== theme) {
         window.localStorage.setItem("theme", theme);
         setThemeType(theme);
@@ -40,7 +48,52 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [setTheme]);
 
-  const { visible, setVisible, bindings } = useModal();
+  const popoverContent = () => (
+    <div style={{ padding: "10px 20px" }}>
+      <Button type="secondary" icon={<Github />} auto>
+        Sign in with Github
+      </Button>
+      <Divider my={2} h={2} />
+      <Button type="abort" icon={<Bookmark />} auto>
+        Saved
+      </Button>
+      <Button type="abort" icon={<Clock />} auto>
+        History
+      </Button>
+      <Button type="abort" icon={<Sliders />} auto>
+        Manage Feed
+      </Button>
+      <Divider my={1} h={2} />
+      {themeType === "light" ? (
+        <Button
+          type="abort"
+          icon={<Moon />}
+          auto
+          onClick={() => setTheme("dark")}
+        >
+          Dark Theme
+        </Button>
+      ) : (
+        <Button
+          type="abort"
+          icon={<Sun />}
+          auto
+          onClick={() => setTheme("light")}
+        >
+          Light Theme
+        </Button>
+      )}
+      <Divider my={1} h={2} />
+      <Button
+        type="abort"
+        icon={<Info />}
+        auto
+        style={{ textTransform: "none" }}
+      >
+        About <em>&nbsp;keepup</em>
+      </Button>
+    </div>
+  );
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -59,40 +112,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           />
         </Link>
 
-        <div className="settings-icon" onClick={() => setVisible(true)}>
-          <Settings size={20} />
-        </div>
-
-        <Modal {...bindings}>
-          <Modal.Title>Settings</Modal.Title>
-
-          <Modal.Content>
-            <Divider my={2.5} />
-            <Radio.Group
-              className="center"
-              value={themeType}
-              onChange={setTheme}
-              useRow
-            >
-              <Radio value="light">Light</Radio>
-              <Radio value="dark">Dark</Radio>
-            </Radio.Group>
-          </Modal.Content>
-
-          <Modal.Action>
-            <Link href="https://hkandala.dev/" target="_blank">
-              <ExternalLink size={20} className="button-link" />
-            </Link>
-          </Modal.Action>
-          <Modal.Action>
-            <Link href="https://github.com/hkandala/keep-up" target="_blank">
-              <Github size={20} className="button-link" />
-            </Link>
-          </Modal.Action>
-          <Modal.Action onClick={() => setVisible(false)}>
-            <X />
-          </Modal.Action>
-        </Modal>
+        <Popover
+          className="menu"
+          content={popoverContent}
+          hideArrow={true}
+          placement="bottomEnd"
+        >
+          <Grid size={20} />
+        </Popover>
 
         <Component {...pageProps} />
       </GeistProvider>

@@ -4,6 +4,7 @@ export default Themes.createFromLight({
   type: "custom-light",
   palette: {
     accents_1: "#eaeaea",
+    accents_5: "#212121",
     background: "#fafafa",
     foreground: "#212121",
     border: "#e0e0e0",
