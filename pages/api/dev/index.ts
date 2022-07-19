@@ -1,9 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { Endpoint } from "../../../lib/types/endpoint.interface";
+import { Endpoint, Index } from "../../../lib/types/index.interface";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.json([
+  res.json(devIndex());
+}
+
+export function devIndex(): Index {
+  const title = "Dev.to";
+  return {
+    title,
+    endpoints: getEndpointList(),
+  };
+}
+
+function getEndpointList(): Endpoint[] {
+  return [
     {
       type: "Featured",
       url: "/api/dev/featured",
@@ -36,5 +48,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       type: "Top (All Time)",
       url: "/api/dev/top?duration=all",
     },
-  ] as Endpoint[]);
+  ];
 }

@@ -6,6 +6,8 @@ import { Text, useMediaQuery, useToasts } from "@geist-ui/core";
 import Metadata from "../components/Metadata";
 import FeedCard from "../components/FeedCard";
 
+import { dashboardIndex } from "./api/dashboard";
+
 export default function Home(props) {
   const metadata = {
     title: "keepup",
@@ -64,58 +66,8 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps(context) {
-  const host = "https://keep-up.vercel.app";
-
-  const hnResponse = await fetch(host + "/api/hackernews");
-  const hnApiData = await hnResponse.json();
-
-  const devResponse = await fetch(host + "/api/dev");
-  const devApiData = await devResponse.json();
-
-  const redditResponse = await fetch(host + "/api/reddit");
-  const redditApiData = await redditResponse.json();
-
+export async function getServerSideProps(context) {
   return {
-    props: {
-      feed: [
-        {
-          title: "Hacker News",
-          endpoints: hnApiData,
-        },
-        {
-          title: "Dev.to",
-          endpoints: devApiData,
-        },
-        {
-          title: "r/programming",
-          endpoints: getEndpointListFromSubType("programming", redditApiData),
-        },
-        {
-          title: "r/javascript",
-          endpoints: getEndpointListFromSubType("javascript", redditApiData),
-        },
-        {
-          title: "r/java",
-          endpoints: getEndpointListFromSubType("java", redditApiData),
-        },
-        {
-          title: "r/machinelearning",
-          endpoints: getEndpointListFromSubType(
-            "machinelearning",
-            redditApiData
-          ),
-        },
-      ],
-    },
+    props: dashboardIndex(),
   };
-}
-
-function getEndpointListFromSubType(subtype, endpointList) {
-  return endpointList.map((endpoint) => {
-    return {
-      type: endpoint.type,
-      url: endpoint.url.replace("{}", subtype),
-    };
-  });
 }

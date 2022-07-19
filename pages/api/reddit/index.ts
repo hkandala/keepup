@@ -1,9 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { Endpoint } from "../../../lib/types/endpoint.interface";
+import { Endpoint, Index } from "../../../lib/types/index.interface";
+import { getEndpointListFromSubType } from "../../../lib/util/api.util";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.json([
+  let { subreddit } = req.query;
+  res.json(redditIndex(subreddit as string));
+}
+
+export function redditIndex(subreddit?: string): Index {
+  let title = "r/{}";
+  if (subreddit != null) {
+    return {
+      title: title.replace("{}", subreddit),
+      endpoints: getEndpointListFromSubType(subreddit, getEndpointList()),
+    };
+  } else {
+    return {
+      title,
+      endpoints: getEndpointList(),
+    };
+  }
+}
+
+function getEndpointList(): Endpoint[] {
+  return [
     {
       type: "Hot",
       url: "/api/reddit/hot?subreddit={}",
@@ -64,5 +85,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       type: "Controversial (All Time)",
       url: "/api/reddit/controversial?subreddit={}&duration=all",
     },
-  ] as Endpoint[]);
+  ];
 }

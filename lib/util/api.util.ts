@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { Duration } from "../types/duration.enum";
+import { Endpoint } from "../types/index.interface";
 import { NewsItem } from "../types/news-item.interface";
 
 export function sendResponse(
@@ -33,4 +34,16 @@ export function getDurationFromQuery(query: NextApiRequest): Duration {
     default:
       return Duration.DAY;
   }
+}
+
+export function getEndpointListFromSubType(
+  subtype: string,
+  endpointList: Endpoint[]
+): Endpoint[] {
+  return endpointList.map((endpoint) => {
+    return {
+      type: endpoint.type,
+      url: endpoint.url.replace("{}", subtype),
+    };
+  });
 }

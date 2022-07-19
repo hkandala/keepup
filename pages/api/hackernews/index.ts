@@ -1,9 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { Endpoint } from "../../../lib/types/endpoint.interface";
+import { Endpoint, Index } from "../../../lib/types/index.interface";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.json([
+  res.json(hnIndex());
+}
+
+export function hnIndex(): Index {
+  const title = "Hacker News";
+  return {
+    title,
+    endpoints: getEndpointList(),
+  };
+}
+
+function getEndpointList(): Endpoint[] {
+  return [
     {
       type: "Trending",
       url: "/api/hackernews/trending",
@@ -48,5 +60,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       type: "Top (All Time)",
       url: "/api/hackernews/top?duration=all",
     },
-  ] as Endpoint[]);
+  ];
 }
