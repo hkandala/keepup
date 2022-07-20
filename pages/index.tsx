@@ -1,12 +1,21 @@
 import { useEffect } from "react";
 import ReactGA from "react-ga";
 import SimpleBar from "simplebar-react";
-import { Text, useMediaQuery, useToasts } from "@geist-ui/core";
+import {
+  Button,
+  Divider,
+  Spacer,
+  Tag,
+  Text,
+  useMediaQuery,
+  useToasts,
+} from "@geist-ui/core";
 
 import Metadata from "../components/Metadata";
 import FeedCard from "../components/FeedCard";
 
 import { dashboardIndex } from "./api/dashboard";
+import { Emoji, Github } from "@geist-ui/icons";
 
 export default function Home(props) {
   const metadata = {
@@ -62,6 +71,46 @@ export default function Home(props) {
           ))}
         </div>
       </SimpleBar>
+
+      <div className="footer-wrapper">
+        <Divider my={3} />
+
+        <div className="footer">
+          <a href="https://hkandala.dev/" target="_blank" rel="noreferrer">
+            <Button scale={0.5} px={0.6} icon={<Emoji />} auto />
+          </a>
+
+          <div className="attribute">
+            Made for{" "}
+            <Tag scale={0.8} invert>
+              <a
+                href="https://planetscale.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                planetscale
+              </a>
+            </Tag>{" "}
+            x{" "}
+            <Tag scale={0.8} invert>
+              <a href="https://hashnode.com/" target="_blank" rel="noreferrer">
+                hashnode
+              </a>
+            </Tag>{" "}
+            hackathon
+          </div>
+
+          <a
+            href="https://github.com/hkandala/keep-up"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Button scale={0.5} px={0.6} icon={<Github />} auto />
+          </a>
+        </div>
+
+        <Spacer my={0.4} />
+      </div>
     </>
   );
 }

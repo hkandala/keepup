@@ -2,28 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 import Image from "next/image";
-import {
-  Github,
-  Grid,
-  Bookmark,
-  Clock,
-  Sliders,
-  Sun,
-  Moon,
-  Info,
-} from "@geist-ui/icons";
-import {
-  GeistProvider,
-  CssBaseline,
-  Divider,
-  Link,
-  Popover,
-  Button,
-} from "@geist-ui/core";
+import { Grid } from "@geist-ui/icons";
+import { GeistProvider, CssBaseline, Link, Popover } from "@geist-ui/core";
 
 import "../styles/globals.css";
 import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
+import MenuPopOver from "../components/MenuPopOver";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [themeType, setThemeType] = useState("light");
@@ -48,53 +33,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [setTheme]);
 
-  const popoverContent = () => (
-    <div style={{ padding: "10px 20px" }}>
-      <Button type="secondary" icon={<Github />} auto>
-        Sign in with Github
-      </Button>
-      <Divider my={2} h={2} />
-      <Button type="abort" icon={<Bookmark />} auto>
-        Saved
-      </Button>
-      <Button type="abort" icon={<Clock />} auto>
-        History
-      </Button>
-      <Button type="abort" icon={<Sliders />} auto>
-        Manage Feed
-      </Button>
-      <Divider my={1} h={2} />
-      {themeType === "light" ? (
-        <Button
-          type="abort"
-          icon={<Moon />}
-          auto
-          onClick={() => setTheme("dark")}
-        >
-          Dark Theme
-        </Button>
-      ) : (
-        <Button
-          type="abort"
-          icon={<Sun />}
-          auto
-          onClick={() => setTheme("light")}
-        >
-          Light Theme
-        </Button>
-      )}
-      <Divider my={1} h={2} />
-      <Button
-        type="abort"
-        icon={<Info />}
-        auto
-        style={{ textTransform: "none" }}
-      >
-        About <em>&nbsp;keepup</em>
-      </Button>
-    </div>
-  );
-
   return (
     <SessionProvider session={pageProps.session}>
       <GeistProvider
@@ -114,7 +52,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         <Popover
           className="menu"
-          content={popoverContent}
+          content={
+            <>
+              <MenuPopOver themeType={themeType} setTheme={setTheme} />
+            </>
+          }
           hideArrow={true}
           placement="bottomEnd"
         >

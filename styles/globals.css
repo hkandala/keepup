@@ -22,10 +22,35 @@
   font-family: "Roboto Slab", serif !important;
 }
 
+.select-wrapper {
+  min-width: 125px !important;
+}
+
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.menu-wrapper {
+  padding: 10px 20px;
+}
+
+.menu-button {
+  display: block !important;
+}
+
+.menu-button.disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+.email-text {
+  display: inline-block;
+  max-width: 15rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .menu {
@@ -162,7 +187,49 @@
   color: #9e9e9e !important;
 }
 
+.footer-wrapper {
+  display: none;
+}
+
+.footer {
+  display: flex;
+}
+
+.footer .btn {
+  margin: 0 20px !important;
+}
+
+.attribute {
+  margin: 0 auto;
+  font-size: 14px;
+  text-align: center;
+}
+
+.attribute a {
+  color: inherit;
+}
+
+.about-modal footer a {
+  color: inherit;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.about-modal small a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.remove-text-transform {
+  text-transform: none !important;
+}
+
 @media (min-width: 900px) {
+  .footer-wrapper {
+    display: block;
+  }
+
   .feed-wrapper {
     flex-wrap: wrap;
   }

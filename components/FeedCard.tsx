@@ -130,7 +130,7 @@ export default function FeedCard(props) {
           disableMatchWidth
           scale={0.6}
           width="125px"
-          style={{ minWidth: "125px" }}
+          className="select-wrapper"
         >
           {props.endpoints.map((endpoint, index) => (
             <Select.Option value={index.toString()} key={index}>
