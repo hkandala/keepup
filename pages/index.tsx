@@ -1,4 +1,7 @@
 import { useEffect } from "react";
+import { GetServerSidePropsContext } from "next";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
 import ReactGA from "react-ga";
 import SimpleBar from "simplebar-react";
 import {
@@ -10,12 +13,11 @@ import {
   useMediaQuery,
   useToasts,
 } from "@geist-ui/core";
+import { Emoji, Github } from "@geist-ui/icons";
 
 import Metadata from "../components/Metadata";
 import FeedCard from "../components/FeedCard";
-
 import { dashboardIndex } from "./api/dashboard";
-import { Emoji, Github } from "@geist-ui/icons";
 
 export default function Home(props) {
   const metadata = {
@@ -115,8 +117,13 @@ export default function Home(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
   return {
-    props: dashboardIndex(),
+    props: await dashboardIndex(session),
   };
 }

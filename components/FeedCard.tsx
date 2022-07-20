@@ -15,15 +15,15 @@ import {
 } from "@geist-ui/core";
 
 export default function FeedCard(props) {
-  const defaultType = 0;
   const [items, setItems] = useState({ feedItems: [], isFetching: false });
   const theme = useTheme();
+  const endpointIndex = props.endpointIndex;
 
   const fetchItems = useCallback(
-    async (type) => {
+    async (index) => {
       try {
         setItems({ feedItems: [], isFetching: true });
-        const response = await fetch(props.endpoints[Number(type)].url);
+        const response = await fetch(props.endpoints[Number(index)].url);
         const responseJson = await response.json();
         setItems({ feedItems: responseJson, isFetching: false });
       } catch (e) {
@@ -35,8 +35,8 @@ export default function FeedCard(props) {
   );
 
   useEffect(() => {
-    fetchItems(defaultType);
-  }, [fetchItems]);
+    fetchItems(endpointIndex);
+  }, [endpointIndex, fetchItems]);
 
   const isDesktop = useMediaQuery("md", { match: "up" });
   const [height, setHeight] = useState({
@@ -125,7 +125,7 @@ export default function FeedCard(props) {
       <Card.Content className="feed-header-wrapper">
         <Text h4>{props.title}</Text>
         <Select
-          initialValue={defaultType.toString()}
+          initialValue={endpointIndex.toString()}
           onChange={fetchItems}
           disableMatchWidth
           scale={0.6}

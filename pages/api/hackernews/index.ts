@@ -7,10 +7,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export function hnIndex(): Index {
+  const id = "hackernews";
   const name = "Hacker News";
   const categoryName = null;
   const title = "Hacker News";
   return {
+    id,
     name,
     categoryName,
     title,

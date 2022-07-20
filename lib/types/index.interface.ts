@@ -1,4 +1,5 @@
 export interface Index {
+  id: string;
   name: string;
   categoryName: string;
   title: string;

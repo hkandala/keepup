@@ -9,11 +9,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export function redditIndex(subreddit?: string): Index {
+  const id = "reddit";
   const name = "Reddit";
   const categoryName = "Subreddit";
   const title = "r/{}";
   if (subreddit != null) {
     return {
+      id,
       name,
       categoryName,
       title: title.replace("{}", subreddit),
@@ -21,6 +23,7 @@ export function redditIndex(subreddit?: string): Index {
     };
   } else {
     return {
+      id,
       name,
       categoryName,
       title,

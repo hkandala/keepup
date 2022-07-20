@@ -7,10 +7,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export function devIndex(): Index {
+  const id = "dev";
   const name = "Dev.to";
   const categoryName = null;
   const title = "Dev.to";
   return {
+    id,
     name,
     categoryName,
     title,
