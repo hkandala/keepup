@@ -228,6 +228,22 @@ input {
   text-transform: none !important;
 }
 
+#feed-drawer {
+  min-width: 312px;
+}
+
+#feed-drawer .content {
+  overflow: auto;
+}
+
+#feed-drawer h2 {
+  font-family: "Roboto Slab", serif !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 .manage-feed-item-wrapper {
   display: flex;
   align-items: center;
@@ -236,6 +252,7 @@ input {
   margin: 15px 0;
   border-radius: 6px;
   border: 1px solid transparent;
+  min-width: 270px;
 }
 
 .manage-feed-item-wrapper .sortable-handle {
@@ -247,6 +264,33 @@ input {
 
 .sortable-ghost {
   opacity: 0;
+}
+
+.manage-feed-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.manage-feed-input > div {
+  margin: 3px 0 !important;
+}
+
+.manage-feed-delete {
+  cursor: pointer;
+  padding: 10px;
+  padding-right: 5px;
+}
+
+.manage-feed-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  min-width: 270px;
+  cursor: pointer;
 }
 
 @media (min-width: 900px) {

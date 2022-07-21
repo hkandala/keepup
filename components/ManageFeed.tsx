@@ -3,16 +3,19 @@ import { ReactSortable } from "react-sortablejs";
 import {
   AutoComplete,
   Input,
+  Spacer,
   Spinner,
-  Text,
   useTheme,
   useToasts,
 } from "@geist-ui/core";
-import { Menu } from "@geist-ui/icons";
+import { Frown, Menu, PlusCircle, Trash2 } from "@geist-ui/icons";
 
 export default function ManageFeed(props) {
   const theme = useTheme();
-  const { setToast } = useToasts();
+  const { setToast } = useToasts({
+    placement: "bottomLeft",
+    maxWidth: "300px",
+  });
 
   const [config, setConfig] = useState({
     data: {},
@@ -93,6 +96,7 @@ export default function ManageFeed(props) {
         return map;
       }, {});
 
+      setNewConfig(feedConfig);
       setConfig({
         data: {
           feedConfig,
@@ -107,7 +111,6 @@ export default function ManageFeed(props) {
         },
         isFetching: false,
       });
-      setNewConfig(feedConfig);
     } catch (e) {
       console.error(e);
       setConfig({
@@ -158,20 +161,46 @@ export default function ManageFeed(props) {
     setNewConfig(newConfigCopy);
   };
 
+  const deleteItem = (index) => {
+    if (newConfig.length > 1) {
+      const newConfigCopy = [...newConfig];
+      newConfigCopy.splice(index, 1);
+      setNewConfig(newConfigCopy);
+    } else {
+      setToast({
+        text: "Feed cannot be empty",
+        type: "error",
+      });
+    }
+  };
+
+  const addItem = () => {
+    const newConfigCopy = [...newConfig];
+    newConfigCopy.push({
+      key: (Math.random() + 1).toString(36).substring(7),
+      id: null,
+      categoryName: null,
+      endpointIndex: 0,
+    });
+    setNewConfig(newConfigCopy);
+  };
+
   useEffect(() => {
     fetchConfig();
   }, [fetchConfig]);
 
   if (config.isFetching) {
     return (
-      <div>
+      <div className="center">
+        <Spacer my={2} />
         <Spinner scale={2} />
       </div>
     );
-  } else if (config.data.length == 0) {
+  } else if (Object.keys(config.data).length == 0) {
     return (
-      <div>
-        <Text b>Uh oh, something wrong happened :(</Text>
+      <div className="center">
+        <Spacer my={2} />
+        <Frown scale={2} />
       </div>
     );
   } else {
@@ -202,7 +231,7 @@ export default function ManageFeed(props) {
               <div className="sortable-handle">
                 <Menu size={14} />
               </div>
-              <div>
+              <div className="manage-feed-input">
                 <AutoComplete
                   disableFreeSolo
                   disableMatchWidth
@@ -220,7 +249,7 @@ export default function ManageFeed(props) {
                     )
                   }
                 />
-                {parserMap[item.id].categoryName ? (
+                {parserMap[item.id]?.categoryName ? (
                   <Input
                     placeholder={parserMap[item.id].categoryName}
                     initialValue={item.categoryName}
@@ -236,7 +265,7 @@ export default function ManageFeed(props) {
                   disableMatchWidth
                   options={categoryOptionsMap[item.id]}
                   placeholder="Feed Type"
-                  initialValue={categoryOptionsIndexToTypeMap[item.id][
+                  initialValue={categoryOptionsIndexToTypeMap[item.id]?.[
                     item.endpointIndex
                   ].toString()}
                   getPopupContainer={() =>
@@ -251,9 +280,22 @@ export default function ManageFeed(props) {
                   }
                 />
               </div>
+              <div
+                className="manage-feed-delete"
+                onClick={() => deleteItem(itemIndex)}
+              >
+                <Trash2 size={14} />
+              </div>
             </div>
           ))}
         </ReactSortable>
+        <div
+          className="manage-feed-add"
+          style={{ boxShadow: theme.expressiveness.shadowSmall }}
+          onClick={addItem}
+        >
+          <PlusCircle scale={4} />
+        </div>
         <style jsx global>{`
           .item.active {
             color: ${theme.palette.foreground} !important;
