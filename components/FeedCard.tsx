@@ -96,7 +96,7 @@ export default function FeedCard(props) {
                   text={item.description}
                   className={
                     theme.type == "custom-dark"
-                      ? "description-dark"
+                      ? "description dark"
                       : "description"
                   }
                 />

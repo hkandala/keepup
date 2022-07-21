@@ -1,5 +1,13 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Button, Divider, Modal, Text, useModal, User } from "@geist-ui/core";
+import {
+  Button,
+  Divider,
+  Drawer,
+  Modal,
+  Text,
+  useModal,
+  User,
+} from "@geist-ui/core";
 import {
   Bookmark,
   Clock,
@@ -12,10 +20,13 @@ import {
   Sliders,
   Sun,
 } from "@geist-ui/icons";
+import { useState } from "react";
+import ManageFeed from "./ManageFeed";
 
 export default function MenuPopOver(props) {
   const { data: session, status } = useSession();
   const { visible, setVisible, bindings } = useModal();
+  const [feedDrawerVisibility, setFeedDrawerVisibility] = useState(false);
 
   return (
     <div className="menu-wrapper">
@@ -67,6 +78,7 @@ export default function MenuPopOver(props) {
           status !== "authenticated" ? "menu-button disabled" : "menu-button"
         }
         auto
+        onClick={() => setFeedDrawerVisibility(true)}
       >
         Manage Feed
       </Button>
@@ -116,6 +128,7 @@ export default function MenuPopOver(props) {
         About <em>&nbsp;keepup</em>
       </Button>
 
+      {/* About Modal */}
       <Modal {...bindings} wrapClassName="about-modal">
         <Modal.Title className="remove-text-transform">
           About <em>&nbsp;keepup</em>
@@ -160,6 +173,19 @@ export default function MenuPopOver(props) {
           </a>
         </Modal.Action>
       </Modal>
+
+      {/* Manage Feed Drawer */}
+      <Drawer
+        id="feed-drawer"
+        visible={feedDrawerVisibility}
+        onClose={() => setFeedDrawerVisibility(false)}
+        placement="right"
+      >
+        <Drawer.Title>Manage Feed</Drawer.Title>
+        <Drawer.Content>
+          <ManageFeed />
+        </Drawer.Content>
+      </Drawer>
     </div>
   );
 }

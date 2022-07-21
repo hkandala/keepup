@@ -26,6 +26,14 @@
   min-width: 125px !important;
 }
 
+input {
+  font-family: "Roboto Slab", serif !important;
+}
+
+.dropdown .item {
+  font-family: "Roboto Slab", serif !important;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -120,12 +128,7 @@
   color: #212121;
 }
 
-.card .description-dark {
-  font-family: "Roboto Slab", serif !important;
-  font-size: 0.875rem;
-  font-weight: 300;
-  line-height: 1.5;
-  margin: 0;
+.card .description.dark {
   color: #e0e0e0;
 }
 
@@ -223,6 +226,27 @@
 
 .remove-text-transform {
   text-transform: none !important;
+}
+
+.manage-feed-item-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  padding-left: 0;
+  margin: 15px 0;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+.manage-feed-item-wrapper .sortable-handle {
+  cursor: grab;
+  opacity: 0.6;
+  padding: 10px;
+  padding-left: 15px;
+}
+
+.sortable-ghost {
+  opacity: 0;
 }
 
 @media (min-width: 900px) {

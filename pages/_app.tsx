@@ -10,7 +10,7 @@ import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
 import MenuPopOver from "../components/MenuPopOver";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const [themeType, setThemeType] = useState("light");
 
   const setTheme = useCallback(
@@ -68,5 +68,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </SessionProvider>
   );
 }
-
-export default MyApp;
