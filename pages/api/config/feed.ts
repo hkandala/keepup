@@ -56,37 +56,35 @@ export async function fetchFeedConfig(session: any): Promise<FeedConfig[]> {
 }
 
 export async function updateFeedConfig(session: any, body: any) {
-  const feedConfigRequestSchema = Joi.object({
-    config: Joi.array()
-      .required()
-      .min(1)
-      .items(
-        Joi.object({
-          id: Joi.string()
-            .required()
-            .valid(...indexFunctionList.map((f) => f().id)),
-          categoryName: Joi.string().allow(null),
-          endpointIndex: indexFunctionList.reduce((joi, f) => {
-            return joi.when("id", {
-              is: f().id,
-              then: Joi.number()
-                .integer()
-                .min(0)
-                .max(f().endpoints.length - 1),
-            });
-          }, Joi.number().required()),
-        })
-      )
-      .unique(
-        (a, b) =>
-          a.id === b.id &&
-          a.categoryName === b.categoryName &&
-          a.endpointIndex === b.endpointIndex
-      ),
-  });
+  const feedConfigRequestSchema = Joi.array()
+    .required()
+    .min(1)
+    .items(
+      Joi.object({
+        id: Joi.string()
+          .required()
+          .valid(...indexFunctionList.map((f) => f().id)),
+        categoryName: Joi.string().allow(null),
+        endpointIndex: indexFunctionList.reduce((joi, f) => {
+          return joi.when("id", {
+            is: f().id,
+            then: Joi.number()
+              .integer()
+              .min(0)
+              .max(f().endpoints.length - 1),
+          });
+        }, Joi.number().required()),
+      })
+    )
+    .unique(
+      (a, b) =>
+        a.id === b.id &&
+        a.categoryName === b.categoryName &&
+        a.endpointIndex === b.endpointIndex
+    );
 
   const { error, value } = feedConfigRequestSchema.validate(body);
-  const requestConfig = value.config as FeedConfig[];
+  const requestConfig = value as FeedConfig[];
 
   if (error) {
     return [400, error];

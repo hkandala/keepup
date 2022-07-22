@@ -181,8 +181,10 @@ export default function MenuPopOver(props) {
         onClose={() => setFeedDrawerVisibility(false)}
         placement="right"
       >
-        <Drawer.Title>Manage Feed</Drawer.Title>
         <Drawer.Content>
+          <Text h3 className="center">
+            Manage Feed
+          </Text>
           <ManageFeed />
         </Drawer.Content>
       </Drawer>

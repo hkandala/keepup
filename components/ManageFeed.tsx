@@ -2,13 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import {
   AutoComplete,
+  Button,
   Input,
+  Loading,
   Spacer,
-  Spinner,
   useTheme,
   useToasts,
 } from "@geist-ui/core";
 import { Frown, Menu, PlusCircle, Trash2 } from "@geist-ui/icons";
+import Router from "next/router";
 
 export default function ManageFeed(props) {
   const theme = useTheme();
@@ -22,6 +24,7 @@ export default function ManageFeed(props) {
     isFetching: false,
   } as any);
   const [newConfig, setNewConfig] = useState([]);
+  const [saving, setSaving] = useState(false);
 
   const sortableOptions = {
     animation: 200,
@@ -139,7 +142,7 @@ export default function ManageFeed(props) {
         endpointIndex: 0,
       });
     } else if (type === "categoryName") {
-      value = value == "" ? null : value;
+      value = value === "" ? null : value;
       if (origItem.categoryName === value) {
         return;
       }
@@ -147,7 +150,7 @@ export default function ManageFeed(props) {
         categoryName: value,
       });
     } else if (type === "endpointIndex") {
-      value = Number(value);
+      value = value === "" ? null : value;
       if (origItem.endpointIndex === value) {
         return;
       }
@@ -180,9 +183,75 @@ export default function ManageFeed(props) {
       key: (Math.random() + 1).toString(36).substring(7),
       id: null,
       categoryName: null,
-      endpointIndex: 0,
+      endpointIndex: null,
     });
     setNewConfig(newConfigCopy);
+  };
+
+  const saveChanges = async () => {
+    let error = false;
+    let duplicate = false;
+    let keySet = new Set();
+
+    newConfig.forEach((item) => {
+      if (item.id == null || item.id === "") {
+        error = true;
+        return;
+      }
+      if (item.endpointIndex == null) {
+        error = true;
+        return;
+      }
+      if (config.data.parserMap[item.id].categoryName != null) {
+        if (item.categoryName == null || item.categoryName === "") {
+          error = true;
+          return;
+        }
+      }
+
+      const key = item.id + "-" + item.categoryName + "-" + item.endpointIndex;
+      if (keySet.has(key)) {
+        duplicate = true;
+        return;
+      } else {
+        keySet.add(key);
+      }
+    });
+
+    if (error) {
+      setToast({
+        text: "Few fields are empty",
+        type: "error",
+      });
+    } else if (duplicate) {
+      setToast({
+        text: "Duplicate entries are not allowed",
+        type: "error",
+      });
+    } else {
+      try {
+        setSaving(true);
+        const body = newConfig.map((item) => ({
+          id: item.id,
+          categoryName: item.categoryName,
+          endpointIndex: item.endpointIndex,
+        }));
+        await fetch("/api/config/feed", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+        Router.reload();
+      } catch (error) {
+        console.error(error);
+        setToast({
+          text: "Error updating feed",
+          type: "error",
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -192,14 +261,14 @@ export default function ManageFeed(props) {
   if (config.isFetching) {
     return (
       <div className="center">
-        <Spacer my={2} />
-        <Spinner scale={2} />
+        <Spacer my={1} />
+        <Loading scale={2} />
       </div>
     );
   } else if (Object.keys(config.data).length == 0) {
     return (
       <div className="center">
-        <Spacer my={2} />
+        <Spacer my={1} />
         <Frown scale={2} />
       </div>
     );
@@ -241,6 +310,11 @@ export default function ManageFeed(props) {
                   getPopupContainer={() =>
                     document.getElementsByClassName("wrapper")[0] as HTMLElement
                   }
+                  onChange={(value) => {
+                    if (value === "") {
+                      updateNewConfig("id", null, itemIndex);
+                    }
+                  }}
                   onSelect={(value) =>
                     updateNewConfig(
                       "id",
@@ -267,10 +341,15 @@ export default function ManageFeed(props) {
                   placeholder="Feed Type"
                   initialValue={categoryOptionsIndexToTypeMap[item.id]?.[
                     item.endpointIndex
-                  ].toString()}
+                  ]?.toString()}
                   getPopupContainer={() =>
                     document.getElementsByClassName("wrapper")[0] as HTMLElement
                   }
+                  onChange={(value) => {
+                    if (value === "") {
+                      updateNewConfig("endpointIndex", null, itemIndex);
+                    }
+                  }}
                   onSelect={(value) =>
                     updateNewConfig(
                       "endpointIndex",
@@ -296,6 +375,15 @@ export default function ManageFeed(props) {
         >
           <PlusCircle scale={4} />
         </div>
+        <Button
+          width="100%"
+          scale={1.2}
+          type="secondary"
+          loading={saving}
+          onClick={saveChanges}
+        >
+          Save
+        </Button>
         <style jsx global>{`
           .item.active {
             color: ${theme.palette.foreground} !important;
