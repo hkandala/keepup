@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, Fragment } from "react";
 import SimpleBar from "simplebar-react";
 import ClampLines from "react-clamp-lines";
-import { MessageSquare } from "@geist-ui/icons";
+import { Bookmark } from "@geist-ui/icons";
 import {
   Badge,
   Card,
@@ -72,19 +72,28 @@ export default function FeedCard(props) {
   } else {
     feedContent = items.feedItems.map((item, index) => (
       <Fragment key={index}>
-        <div className="list-item">
+        <div
+          className={
+            theme.type == "custom-dark" ? "list-item dark" : "list-item"
+          }
+        >
           <div className="badge-wrapper">
-            <a href={item.url} target="_blank" rel="noreferrer">
+            <a
+              href={item.url}
+              onClick={(e) => {
+                e.preventDefault();
+                window
+                  .open(
+                    item.alternativeUrl ? item.alternativeUrl : item.url,
+                    "_blank"
+                  )
+                  .focus();
+              }}
+            >
               <Badge scale={0.75}>{item.score}</Badge>
             </a>
           </div>
-          <div
-            className={
-              item.alternativeUrl != undefined
-                ? "link-content-with-discussion"
-                : "link-content"
-            }
-          >
+          <div className="link-content">
             <Link href={item.url} title={item.title} target="_blank">
               <Text small>{item.title}</Text>
             </Link>
@@ -94,26 +103,18 @@ export default function FeedCard(props) {
                 <ClampLines
                   id={item.url}
                   text={item.description}
-                  className={
-                    theme.type == "custom-dark"
-                      ? "description dark"
-                      : "description"
-                  }
+                  className="description"
                 />
               </>
             ) : (
               <></>
             )}
           </div>
-          {item.alternativeUrl != undefined ? (
-            <div className="discussion-link-wrapper">
-              <Link href={item.alternativeUrl} target="_blank">
-                <MessageSquare size={20} />
-              </Link>
-            </div>
-          ) : (
-            <></>
-          )}
+          <div className="bookmark-wrapper">
+            <a href={item.url} onClick={(e) => e.preventDefault()}>
+              <Bookmark size={20} />
+            </a>
+          </div>
         </div>
         {index + 1 < itemCount ? <Divider my={1.8} /> : <></>}
       </Fragment>
@@ -127,10 +128,9 @@ export default function FeedCard(props) {
         <Select
           initialValue={endpointIndex.toString()}
           onChange={fetchItems}
-          disableMatchWidth
           scale={0.6}
-          width="125px"
           className="select-wrapper"
+          disableMatchWidth
         >
           {props.endpoints.map((endpoint, index) => (
             <Select.Option value={index.toString()} key={index}>

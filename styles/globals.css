@@ -24,6 +24,7 @@
 
 .select-wrapper {
   min-width: 125px !important;
+  width: 125px !important;
 }
 
 input {
@@ -119,19 +120,6 @@ input {
   font-weight: 700;
 }
 
-.card .description {
-  font-family: "Roboto Slab", serif !important;
-  font-size: 0.875rem;
-  font-weight: 300;
-  line-height: 1.5;
-  margin: 0;
-  color: #212121;
-}
-
-.card .description.dark {
-  color: #e0e0e0;
-}
-
 .feed-header-wrapper {
   padding: 21px !important;
   display: flex;
@@ -154,6 +142,19 @@ input {
   display: flex;
 }
 
+.list-item .description {
+  font-family: "Roboto Slab", serif !important;
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0;
+  color: #212121;
+}
+
+.list-item.dark .description {
+  color: #e0e0e0;
+}
+
 .list-item a:hover {
   text-decoration: underline !important;
   text-decoration-color: #9e9e9e !important;
@@ -166,27 +167,39 @@ input {
 }
 
 .list-item .link-content {
-  width: calc(100% - 60px);
-}
-
-.list-item .link-content-with-discussion {
   width: calc(100% - 90px);
 }
 
-.list-item .discussion-link-wrapper {
+.list-item .bookmark-wrapper {
   width: 30px;
   text-align: right;
 }
 
+.list-item .bookmark-wrapper a {
+  color: inherit !important;
+}
+
 .list-item .badge-wrapper a:visited span {
-  background-color: #9e9e9e;
+  background-color: #757575;
 }
 
 .list-item a:visited small {
+  color: #757575;
+}
+
+.list-item .bookmark-wrapper a:visited svg {
+  color: #757575 !important;
+}
+
+.list-item.dark .badge-wrapper a:visited span {
+  background-color: #9e9e9e;
+}
+
+.list-item.dark a:visited small {
   color: #9e9e9e;
 }
 
-.list-item .discussion-link-wrapper a:visited svg {
+.list-item.dark .bookmark-wrapper a:visited svg {
   color: #9e9e9e !important;
 }
 
