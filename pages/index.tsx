@@ -1,41 +1,21 @@
 import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]";
 import ReactGA from "react-ga";
 import SimpleBar from "simplebar-react";
-import {
-  Button,
-  Divider,
-  Spacer,
-  Tag,
-  Text,
-  useMediaQuery,
-  useToasts,
-} from "@geist-ui/core";
-import { Emoji, Github } from "@geist-ui/icons";
+import { useMediaQuery, useToasts } from "@geist-ui/core";
 
+import { authOptions } from "./api/auth/[...nextauth]";
+import { dashboardIndex } from "./api/dashboard";
+import { fetchFeedConfig } from "./api/config/feed";
+import { listIndex } from "./api/config/parser_index";
+import metadata from "../lib/constants/metadata";
 import Metadata from "../components/Metadata";
 import FeedCard from "../components/FeedCard";
-import { dashboardIndex } from "./api/dashboard";
+import Menu from "../components/Menu";
+import Footer from "../components/Footer";
 
 export default function Home(props) {
-  const metadata = {
-    title: "keepup",
-    description: "Keep up with all tech trends from a single page!",
-    keywords: "news-aggregator, news-feed, trends, technology",
-    manifestFile: "manifest.webmanifest",
-    theme: "#fafafa",
-    lightStatusColor: "#fafafa",
-    darkStatusColor: "#35363a",
-    favicon: "/favicon.ico",
-    favicon16: "/favicon-16x16.png",
-    favicon32: "/favicon-32x32.png",
-    icon192: "/icons/icon-192x192.png",
-    appleIcon: "/icons/apple-touch-icon.png",
-    gaId: "UA-176784721-2",
-  };
-
   const isDesktop = useMediaQuery("md", { match: "up" });
   const { setToast } = useToasts();
 
@@ -52,21 +32,22 @@ export default function Home(props) {
         window.localStorage.setItem("scroll-notification", "true");
       }
     }
-  }, [isDesktop, metadata.gaId, setToast]);
+  }, [isDesktop, setToast]);
 
   return (
     <>
-      <Metadata metadata={metadata} />
+      <Metadata />
 
-      <div className="center">
-        <Text h3 className="title">
-          {metadata.title}
-        </Text>
-      </div>
+      <Menu
+        themeType={props.themeType}
+        setTheme={props.setTheme}
+        parserIndex={props.parserIndex}
+        feedConfig={props.feedConfig}
+      />
 
       <SimpleBar autoHide={false}>
         <div className="feed-wrapper">
-          {props.feed.map((item) => (
+          {props.dashboardIndex.feed.map((item) => (
             <div className="feed-item" key={item.title}>
               <FeedCard {...item}></FeedCard>
             </div>
@@ -74,45 +55,7 @@ export default function Home(props) {
         </div>
       </SimpleBar>
 
-      <div className="footer-wrapper">
-        <Divider my={3} />
-
-        <div className="footer">
-          <a href="https://hkandala.dev/" target="_blank" rel="noreferrer">
-            <Button scale={0.5} px={0.6} icon={<Emoji />} auto />
-          </a>
-
-          <div className="attribute">
-            Made for{" "}
-            <Tag scale={0.8} invert>
-              <a
-                href="https://planetscale.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                planetscale
-              </a>
-            </Tag>{" "}
-            x{" "}
-            <Tag scale={0.8} invert>
-              <a href="https://hashnode.com/" target="_blank" rel="noreferrer">
-                hashnode
-              </a>
-            </Tag>{" "}
-            hackathon
-          </div>
-
-          <a
-            href="https://github.com/hkandala/keep-up"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Button scale={0.5} px={0.6} icon={<Github />} auto />
-          </a>
-        </div>
-
-        <Spacer my={0.4} />
-      </div>
+      <Footer />
     </>
   );
 }
@@ -123,7 +66,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     context.res,
     authOptions
   );
+
+  const [dashboardIndexData, parserIndexData, feedConfigData] =
+    await Promise.all([
+      dashboardIndex(session),
+      listIndex(),
+      fetchFeedConfig(session),
+    ]);
+
   return {
-    props: await dashboardIndex(session),
+    props: {
+      dashboardIndex: dashboardIndexData,
+      parserIndex: parserIndexData,
+      feedConfig: feedConfigData,
+    },
   };
 }

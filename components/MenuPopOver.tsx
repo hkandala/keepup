@@ -10,7 +10,6 @@ import {
 } from "@geist-ui/core";
 import {
   Bookmark,
-  Clock,
   Coffee,
   Emoji,
   Github,
@@ -63,22 +62,16 @@ export default function MenuPopOver(props) {
       </Button>
       <Button
         type="abort"
-        icon={<Clock />}
-        className={
-          status !== "authenticated" ? "menu-button disabled" : "menu-button"
-        }
-        auto
-      >
-        History
-      </Button>
-      <Button
-        type="abort"
         icon={<Sliders />}
         className={
           status !== "authenticated" ? "menu-button disabled" : "menu-button"
         }
         auto
-        onClick={() => setFeedDrawerVisibility(true)}
+        onClick={() => {
+          if (status === "authenticated") {
+            setFeedDrawerVisibility(true);
+          }
+        }}
       >
         Manage Feed
       </Button>
@@ -185,7 +178,10 @@ export default function MenuPopOver(props) {
           <Text h3 className="center">
             Manage Feed
           </Text>
-          <ManageFeed />
+          <ManageFeed
+            parserIndex={props.parserIndex}
+            feedConfig={props.feedConfig}
+          />
         </Drawer.Content>
       </Drawer>
     </div>

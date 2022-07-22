@@ -265,6 +265,10 @@ input {
   padding-left: 15px;
 }
 
+#sortable-list {
+  position: relative;
+}
+
 .sortable-ghost {
   opacity: 0;
 }

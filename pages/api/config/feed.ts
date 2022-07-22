@@ -4,10 +4,10 @@ import { Prisma } from "@prisma/client";
 import Joi from "joi";
 
 import prisma from "../../../lib/util/prisma";
-import { FeedConfig } from "../../../lib/types/feed-config.interface";
-import defaultFeedConfigList from "../../../lib/util/feed-config.default";
-import indexFunctionList from "../../../lib/util/index-function-list";
 import { authOptions } from "../auth/[...nextauth]";
+import { FeedConfig } from "../../../lib/types/feed-config.interface";
+import defaultFeedConfigList from "../../../lib/constants/default-feed-config";
+import indexFunctionList from "../../../lib/constants/index-function-list";
 
 export default async function handler(
   req: NextApiRequest,

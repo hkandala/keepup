@@ -1,9 +1,10 @@
 import { useTheme } from "@geist-ui/core";
 import Head from "next/head";
 
+import metadata from "../lib/constants/metadata";
+
 export default function Metadata(props) {
   const theme = useTheme();
-  const metadata = props.metadata;
 
   return (
     <Head>

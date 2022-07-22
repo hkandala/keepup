@@ -1,16 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
+import Router from "next/router";
 import {
   AutoComplete,
   Button,
   Input,
-  Loading,
   Spacer,
   useTheme,
   useToasts,
 } from "@geist-ui/core";
 import { Frown, Menu, PlusCircle, Trash2 } from "@geist-ui/icons";
-import Router from "next/router";
 
 export default function ManageFeed(props) {
   const theme = useTheme();
@@ -19,11 +18,6 @@ export default function ManageFeed(props) {
     maxWidth: "300px",
   });
 
-  const [config, setConfig] = useState({
-    data: {},
-    isFetching: false,
-  } as any);
-  const [newConfig, setNewConfig] = useState([]);
   const [saving, setSaving] = useState(false);
 
   const sortableOptions = {
@@ -39,89 +33,65 @@ export default function ManageFeed(props) {
       (document.getElementById("feed-drawer").style.cursor = "grabbing"),
   };
 
-  const fetchConfig = useCallback(async () => {
-    try {
-      setConfig({
-        data: {},
-        isFetching: true,
-      });
+  // Create a copy of the props to avoid sortable render issues
+  const [feedConfig, parserIndex] = [
+    props.feedConfig.map((x) => {
+      return { ...x };
+    }),
+    props.parserIndex.map((x) => {
+      return { ...x };
+    }),
+  ];
 
-      const [feedConfig, parserIndex] = await Promise.all([
-        (await fetch("/api/config/feed")).json(),
-        (await fetch("/api/config/parser_index")).json(),
-      ]);
+  const parserMap = {};
+  parserIndex.forEach((parser) => (parserMap[parser.id] = parser));
+  // add random keys which will be essential for the sortable to work
+  feedConfig.forEach(
+    (item) => (item.key = (Math.random() + 1).toString(36).substring(7))
+  );
 
-      const parserMap = {};
-      parserIndex.forEach((parser) => (parserMap[parser.id] = parser));
-      // add random keys which will be essential for the sortable to work
-      feedConfig.forEach(
-        (item) => (item.key = (Math.random() + 1).toString(36).substring(7))
-      );
+  const [newConfig, setNewConfig] = useState(feedConfig);
 
-      const sourceOptions = parserIndex.map((item) => ({
-        label: item.name,
-        value: item.name,
-      }));
+  const sourceOptions = parserIndex.map((item) => ({
+    label: item.name,
+    value: item.name,
+  }));
 
-      const sourceOptionsNameToIdMap = parserIndex.reduce((map, item) => {
-        map[item.name] = item.id;
-        return map;
-      }, {});
+  const sourceOptionsNameToIdMap = parserIndex.reduce((map, item) => {
+    map[item.name] = item.id;
+    return map;
+  }, {});
 
-      const sourceOptionsIdToNameMap = parserIndex.reduce((map, item) => {
-        map[item.id] = item.name;
-        return map;
-      }, {});
+  const sourceOptionsIdToNameMap = parserIndex.reduce((map, item) => {
+    map[item.id] = item.name;
+    return map;
+  }, {});
 
-      const categoryOptionsMap = parserIndex.reduce((map, item) => {
-        map[item.id] = item.endpoints.map((category) => ({
-          label: category.type,
-          value: category.type,
-        }));
-        return map;
-      }, {});
+  const categoryOptionsMap = parserIndex.reduce((map, item) => {
+    map[item.id] = item.endpoints.map((category) => ({
+      label: category.type,
+      value: category.type,
+    }));
+    return map;
+  }, {});
 
-      const categoryOptionsTypeToIndexMap = parserIndex.reduce((map, item) => {
-        let index = 0;
-        map[item.id] = item.endpoints.reduce((typeMap, category) => {
-          typeMap[category.type] = index++;
-          return typeMap;
-        }, {});
-        return map;
-      }, {});
+  const categoryOptionsTypeToIndexMap = parserIndex.reduce((map, item) => {
+    let index = 0;
+    map[item.id] = item.endpoints.reduce((typeMap, category) => {
+      typeMap[category.type] = index++;
+      return typeMap;
+    }, {});
+    return map;
+  }, {});
 
-      const categoryOptionsIndexToTypeMap = parserIndex.reduce((map, item) => {
-        let index = 0;
-        map[item.id] = item.endpoints.reduce((typeMap, category) => {
-          typeMap[index++] = category.type;
-          return typeMap;
-        }, {});
-        return map;
-      }, {});
-
-      setNewConfig(feedConfig);
-      setConfig({
-        data: {
-          feedConfig,
-          parserIndex,
-          parserMap,
-          sourceOptions,
-          sourceOptionsNameToIdMap,
-          sourceOptionsIdToNameMap,
-          categoryOptionsMap,
-          categoryOptionsTypeToIndexMap,
-          categoryOptionsIndexToTypeMap,
-        },
-        isFetching: false,
-      });
-    } catch (e) {
-      console.error(e);
-      setConfig({
-        data: {},
-        isFetching: false,
-      });
-    }
-  }, [setConfig, setNewConfig]);
+  const categoryOptionsIndexToTypeMap = parserIndex.reduce((map, item) => {
+    let index = 0;
+    map[item.id] = item.endpoints.reduce((typeMap, category) => {
+      typeMap[index++] = category.type;
+      return typeMap;
+    }, {});
+    return map;
+  }, {});
 
   const updateNewConfig = (type, value, index) => {
     if (!(newConfig && newConfig[index])) {
@@ -202,7 +172,7 @@ export default function ManageFeed(props) {
         error = true;
         return;
       }
-      if (config.data.parserMap[item.id].categoryName != null) {
+      if (parserMap[item.id].categoryName != null) {
         if (item.categoryName == null || item.categoryName === "") {
           error = true;
           return;
@@ -254,18 +224,7 @@ export default function ManageFeed(props) {
     }
   };
 
-  useEffect(() => {
-    fetchConfig();
-  }, [fetchConfig]);
-
-  if (config.isFetching) {
-    return (
-      <div className="center">
-        <Spacer my={1} />
-        <Loading scale={2} />
-      </div>
-    );
-  } else if (Object.keys(config.data).length == 0) {
+  if (!newConfig || newConfig.length == 0) {
     return (
       <div className="center">
         <Spacer my={1} />
@@ -273,16 +232,6 @@ export default function ManageFeed(props) {
       </div>
     );
   } else {
-    const {
-      parserMap,
-      sourceOptions,
-      sourceOptionsNameToIdMap,
-      sourceOptionsIdToNameMap,
-      categoryOptionsMap,
-      categoryOptionsTypeToIndexMap,
-      categoryOptionsIndexToTypeMap,
-    } = config.data;
-
     return (
       <>
         <ReactSortable
@@ -308,7 +257,7 @@ export default function ManageFeed(props) {
                   placeholder="Feed Source"
                   initialValue={sourceOptionsIdToNameMap[item.id]}
                   getPopupContainer={() =>
-                    document.getElementsByClassName("wrapper")[0] as HTMLElement
+                    document.getElementById("sortable-list") as HTMLElement
                   }
                   onChange={(value) => {
                     if (value === "") {
@@ -343,7 +292,7 @@ export default function ManageFeed(props) {
                     item.endpointIndex
                   ]?.toString()}
                   getPopupContainer={() =>
-                    document.getElementsByClassName("wrapper")[0] as HTMLElement
+                    document.getElementById("sortable-list") as HTMLElement
                   }
                   onChange={(value) => {
                     if (value === "") {

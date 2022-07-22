@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 
 import { Index } from "../../lib/types/index.interface";
-import indexFunctionList from "../../lib/util/index-function-list";
+import indexFunctionList from "../../lib/constants/index-function-list";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { fetchFeedConfig } from "./config/feed";
 
