@@ -20,9 +20,11 @@ export default async function handler(
     if (session) {
       const [status, data] = await updateFeedConfig(session, req.body);
       return res.status(status as number).json(data);
+    } else {
+      return res.status(401).json({ error: "No user available in session." });
     }
   } else {
-    return res.status(401).json({ error: "No user available in session." });
+    return res.status(400).json({ error: "Invalid request method." });
   }
 }
 
@@ -97,6 +99,7 @@ export async function updateFeedConfig(session: any, body: any) {
     },
     update: {
       config: (<any>requestConfig) as Prisma.JsonArray,
+      updatedAt: new Date(),
     },
     where: {
       userId: session.user.id,

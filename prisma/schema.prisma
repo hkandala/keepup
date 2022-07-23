@@ -53,6 +53,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   feedConfig     FeedConfig?
+  savedFeeds    Saved[]
 
   @@map(name: "users")
 }
@@ -67,12 +68,29 @@ model VerificationToken {
 }
 
 model FeedConfig {
-  id     Int  @id @default(autoincrement())
-  userId Int  @map("user_id")
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  config  Json
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  config     Json
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime? @updatedAt @map(name: "updated_at")
 
   @@unique([userId])
   @@index([userId])
   @@map(name: "feedconfig")
+}
+
+model Saved {
+  id             Int       @id @default(autoincrement())
+  userId         Int       @map("user_id")
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String    @db.Text
+  url            String    @db.Text
+  alternativeUrl String?   @map(name: "alternative_url") @db.Text
+  active         Boolean   @default(true)
+  createdAt      DateTime  @default(now()) @map(name: "created_at")
+  updatedAt      DateTime? @updatedAt @map(name: "updated_at")
+
+  @@index([userId])
+  @@map(name: "saved")
 }
