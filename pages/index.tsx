@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
 import ReactGA from "react-ga";
@@ -9,6 +9,7 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import { dashboardIndex } from "./api/dashboard";
 import { fetchFeedConfig } from "./api/config/feed";
 import { listIndex } from "./api/config/parser_index";
+import { fetchAllSaved } from "./api/saved";
 import metadata from "../lib/constants/metadata";
 import Metadata from "../components/Metadata";
 import FeedCard from "../components/FeedCard";
@@ -18,6 +19,8 @@ import Footer from "../components/Footer";
 export default function Home(props) {
   const isDesktop = useMediaQuery("md", { match: "up" });
   const { setToast } = useToasts();
+
+  const [savedItems, setSavedItems] = useState(props.savedItems);
 
   useEffect(() => {
     if (window.location.hostname !== "localhost") {
@@ -49,7 +52,11 @@ export default function Home(props) {
         <div className="feed-wrapper">
           {props.dashboardIndex.feed.map((item) => (
             <div className="feed-item" key={item.title}>
-              <FeedCard {...item}></FeedCard>
+              <FeedCard
+                {...item}
+                savedItems={savedItems}
+                setSavedItems={setSavedItems}
+              ></FeedCard>
             </div>
           ))}
         </div>
@@ -67,11 +74,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     authOptions
   );
 
-  const [dashboardIndexData, parserIndexData, feedConfigData] =
+  const [dashboardIndexData, parserIndexData, feedConfigData, savedItemsData] =
     await Promise.all([
       dashboardIndex(session),
       listIndex(),
       fetchFeedConfig(session),
+      fetchAllSaved(session),
     ]);
 
   return {
@@ -79,6 +87,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       dashboardIndex: dashboardIndexData,
       parserIndex: parserIndexData,
       feedConfig: feedConfigData,
+      savedItems: savedItemsData,
     },
   };
 }

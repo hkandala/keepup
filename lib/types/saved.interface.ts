@@ -3,6 +3,6 @@ export interface Saved {
   title: string;
   url: string;
   alternativeUrl?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: number;
+  updatedAt: number;
 }

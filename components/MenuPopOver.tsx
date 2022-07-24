@@ -9,10 +9,10 @@ import {
   User,
 } from "@geist-ui/core";
 import {
-  Bookmark,
   Coffee,
   Emoji,
   Github,
+  Heart,
   Info,
   LogOut,
   Moon,
@@ -52,7 +52,7 @@ export default function MenuPopOver(props) {
       <Divider my={2} h={2} />
       <Button
         type="abort"
-        icon={<Bookmark />}
+        icon={<Heart />}
         className={
           status !== "authenticated" ? "menu-button disabled" : "menu-button"
         }

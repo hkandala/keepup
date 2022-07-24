@@ -1,23 +1,32 @@
 import { useCallback, useEffect, useState, Fragment } from "react";
+import { useSession } from "next-auth/react";
 import SimpleBar from "simplebar-react";
 import ClampLines from "react-clamp-lines";
-import { Bookmark } from "@geist-ui/icons";
+import { Heart, HeartFill } from "@geist-ui/icons";
 import {
   Badge,
   Card,
   Divider,
   Link,
+  Loading,
   Select,
   Spinner,
   Text,
   useMediaQuery,
   useTheme,
+  useToasts,
 } from "@geist-ui/core";
 
 export default function FeedCard(props) {
-  const [items, setItems] = useState({ feedItems: [], isFetching: false });
+  const { data: session, status } = useSession();
   const theme = useTheme();
-  const endpointIndex = props.endpointIndex;
+  const { setToast } = useToasts({
+    placement: "bottomLeft",
+    maxWidth: "300px",
+  });
+
+  const [items, setItems] = useState({ feedItems: [], isFetching: false });
+  const [savingItems, setSavingItems] = useState({});
 
   const fetchItems = useCallback(
     async (index) => {
@@ -33,6 +42,75 @@ export default function FeedCard(props) {
     },
     [props.endpoints]
   );
+
+  const saveItem = async (item) => {
+    if (status === "authenticated") {
+      try {
+        const hash = getHash(item);
+        setSavingItems((value) => ({
+          ...value,
+          [hash]: true,
+        }));
+
+        await fetch("/api/saved", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: item.title,
+            url: item.url,
+            alternativeUrl: item.alternativeUrl,
+          }),
+        });
+
+        setSavingItems((value) => ({
+          ...value,
+          [hash]: false,
+        }));
+        props.setSavedItems((value) => [
+          ...value,
+          {
+            title: item.title,
+            url: item.url,
+            alternativeUrl: item.alternativeUrl,
+          },
+        ]);
+        setToast({
+          text: "Saved!",
+          type: "success",
+          delay: 2000,
+        });
+      } catch {
+        setToast({
+          text: "Error saving link",
+          type: "error",
+          delay: 2000,
+        });
+      }
+    } else {
+      setToast({
+        text: "Please sign in to save links",
+        type: "warning",
+        delay: 5000,
+      });
+    }
+  };
+
+  const getHash = (item) => {
+    const hashCode = (s) =>
+      s.split("").reduce((a, b) => {
+        a = (a << 5) - a + b.charCodeAt(0);
+        return a & a;
+      }, 0);
+    return hashCode(
+      item.url + (item.alternativeUrl == null ? "" : item.alternativeUrl)
+    );
+  };
+
+  const endpointIndex = props.endpointIndex;
+  const savedHashSet = new Set();
+  props.savedItems.forEach((item) => savedHashSet.add(getHash(item)));
 
   useEffect(() => {
     fetchItems(endpointIndex);
@@ -111,8 +189,20 @@ export default function FeedCard(props) {
             )}
           </div>
           <div className="bookmark-wrapper">
-            <a href={item.url} onClick={(e) => e.preventDefault()}>
-              <Bookmark size={20} />
+            <a
+              href={item.url}
+              onClick={(e) => {
+                e.preventDefault();
+                saveItem(item);
+              }}
+            >
+              {savingItems[getHash(item)] ? (
+                <Loading scale={0.4} />
+              ) : savedHashSet.has(getHash(item)) ? (
+                <HeartFill size={15} />
+              ) : (
+                <Heart size={15} />
+              )}
             </a>
           </div>
         </div>

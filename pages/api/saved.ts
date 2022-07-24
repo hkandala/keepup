@@ -45,8 +45,8 @@ export async function fetchAllSaved(session: any): Promise<Saved[]> {
         title: item.title,
         url: item.url,
         alternativeUrl: item.alternativeUrl,
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt,
+        createdAt: item.createdAt.valueOf(),
+        updatedAt: item.updatedAt.valueOf(),
       } as Saved)
   );
 }
