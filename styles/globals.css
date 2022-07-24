@@ -167,7 +167,8 @@ input {
   color: #e0e0e0;
 }
 
-.list-item a:hover {
+.list-item a:hover,
+.saved-list-item a:hover {
   text-decoration: underline !important;
   text-decoration-color: #9e9e9e !important;
 }
@@ -265,12 +266,14 @@ input {
   min-width: 312px;
 }
 
-#feed-drawer .content {
+#feed-drawer .content,
+#saved-drawer .content {
   overflow: auto;
   padding-top: 10px;
 }
 
-#feed-drawer h3 {
+#feed-drawer h3,
+#saved-drawer h3 {
   font-family: "Roboto Slab", serif !important;
   padding-top: 8px;
   padding-bottom: 15px;
@@ -331,6 +334,34 @@ input {
   border: 1px solid transparent;
   min-width: 270px;
   cursor: pointer;
+}
+
+.saved-wrapper {
+  width: 270px;
+}
+
+.saved-wrapper .saved-list-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.saved-wrapper .saved-link-content a {
+  color: inherit !important;
+  font-size: 14px;
+}
+
+.saved-wrapper .saved-link-content .discussion-link {
+  vertical-align: text-top;
+  margin-left: 8px;
+}
+
+.saved-wrapper .delete-saved-item {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.saved-wrapper .delete-saved-loader {
+  margin-top: 5px !important;
 }
 
 @media (min-width: 900px) {

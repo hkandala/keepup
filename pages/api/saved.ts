@@ -99,7 +99,16 @@ export async function addSavedItem(session: any, body: any) {
     },
   });
 
-  return [200, savedItem];
+  const savedItemResponse = {
+    id: savedItem.id,
+    title: savedItem.title,
+    url: savedItem.url,
+    alternativeUrl: savedItem.alternativeUrl,
+    createdAt: savedItem.createdAt.valueOf(),
+    updatedAt: savedItem.updatedAt.valueOf(),
+  } as Saved;
+
+  return [200, savedItemResponse];
 }
 
 export async function deleteSavedItem(session: any, body: any) {

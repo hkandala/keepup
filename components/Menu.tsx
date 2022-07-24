@@ -32,6 +32,7 @@ export default function Menu(props) {
               setTheme={props.setTheme}
               parserIndex={props.parserIndex}
               feedConfig={props.feedConfig}
+              savedItemsHook={props.savedItemsHook}
             />
           </>
         }

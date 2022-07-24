@@ -14,6 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@geist-ui/core";
+
 import { getSavedItemHash } from "../pages";
 
 export default function FeedCard(props) {
@@ -100,7 +101,12 @@ export default function FeedCard(props) {
             </a>
           </div>
           <div className="link-content">
-            <Link href={item.url} title={item.title} target="_blank">
+            <Link
+              href={item.url}
+              title={item.title}
+              target="_blank"
+              rel="noreferrer"
+            >
               <Text small>{item.title}</Text>
             </Link>
             {item.description != undefined && item.description != "" ? (

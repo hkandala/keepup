@@ -56,6 +56,7 @@ export default function Home(props) {
         setTheme={props.setTheme}
         parserIndex={props.parserIndex}
         feedConfig={props.feedConfig}
+        savedItemsHook={savedItemsHook}
       />
 
       <SimpleBar autoHide={false}>

@@ -20,12 +20,15 @@ import {
   Sun,
 } from "@geist-ui/icons";
 import { useState } from "react";
+
 import ManageFeed from "./ManageFeed";
+import SavedList from "./SavedList";
 
 export default function MenuPopOver(props) {
   const { data: session, status } = useSession();
   const { visible, setVisible, bindings } = useModal();
   const [feedDrawerVisibility, setFeedDrawerVisibility] = useState(false);
+  const [savedDrawerVisibility, setSavedDrawerVisibility] = useState(false);
 
   return (
     <div className="menu-wrapper">
@@ -57,6 +60,11 @@ export default function MenuPopOver(props) {
           status !== "authenticated" ? "menu-button disabled" : "menu-button"
         }
         auto
+        onClick={() => {
+          if (status === "authenticated") {
+            setSavedDrawerVisibility(true);
+          }
+        }}
       >
         Saved
       </Button>
@@ -182,6 +190,21 @@ export default function MenuPopOver(props) {
             parserIndex={props.parserIndex}
             feedConfig={props.feedConfig}
           />
+        </Drawer.Content>
+      </Drawer>
+
+      {/* Saved Drawer */}
+      <Drawer
+        id="saved-drawer"
+        visible={savedDrawerVisibility}
+        onClose={() => setSavedDrawerVisibility(false)}
+        placement="right"
+      >
+        <Drawer.Content>
+          <Text h3 className="center">
+            Saved
+          </Text>
+          <SavedList savedItemsHook={props.savedItemsHook} />
         </Drawer.Content>
       </Drawer>
     </div>
