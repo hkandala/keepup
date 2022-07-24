@@ -21,11 +21,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   );
 
   useEffect(() => {
-    const isSystemDarkMode =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
     const storedTheme = window.localStorage.getItem("theme");
-    if ((!storedTheme && isSystemDarkMode) || storedTheme == "dark") {
+    if (storedTheme === "light") {
+      setTheme("light");
+    } else {
       setTheme("dark");
     }
   }, [setTheme]);

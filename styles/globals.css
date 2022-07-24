@@ -18,6 +18,18 @@
   text-decoration: underline;
 }
 
+.toast {
+  background-color: #50e3c2 !important;
+  color: #212121 !important;
+  font-weight: 500;
+}
+
+.scroll-nudge-toast {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
 .select-dropdown {
   font-family: "Roboto Slab", serif !important;
 }

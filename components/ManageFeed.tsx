@@ -15,7 +15,6 @@ export default function ManageFeed(props) {
   const theme = useTheme();
   const { setToast } = useToasts({
     placement: "bottomLeft",
-    maxWidth: "300px",
   });
 
   const [saving, setSaving] = useState(false);
@@ -141,8 +140,7 @@ export default function ManageFeed(props) {
       setNewConfig(newConfigCopy);
     } else {
       setToast({
-        text: "Feed cannot be empty",
-        type: "error",
+        text: <span>&#9888; Feed cannot be empty</span>,
       });
     }
   };
@@ -190,13 +188,11 @@ export default function ManageFeed(props) {
 
     if (error) {
       setToast({
-        text: "Few fields are empty",
-        type: "error",
+        text: <span>&#9888; Few fields are empty</span>,
       });
     } else if (duplicate) {
       setToast({
-        text: "Duplicate entries are not allowed",
-        type: "error",
+        text: <span>&#9888; Duplicate entries are not allowed</span>,
       });
     } else {
       try {
@@ -217,7 +213,7 @@ export default function ManageFeed(props) {
       } catch (error) {
         console.error(error);
         setToast({
-          text: "Error updating feed",
+          text: <span>&#9888; Error updating feed</span>,
           type: "error",
         });
       }

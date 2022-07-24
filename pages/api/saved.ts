@@ -40,6 +40,9 @@ export async function fetchAllSaved(session: any): Promise<Saved[]> {
       userId: session.user.id,
       active: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return savedListResponse.map(
@@ -73,6 +76,7 @@ export async function addSavedItem(session: any, body: any) {
       userId: session.user.id,
       url: value.url,
       alternativeUrl: value.alternativeUrl,
+      active: true,
     },
   });
 
