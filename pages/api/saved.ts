@@ -31,6 +31,10 @@ export default async function handler(
 }
 
 export async function fetchAllSaved(session: any): Promise<Saved[]> {
+  if (!session) {
+    return [];
+  }
+
   const savedListResponse = await prisma.saved.findMany({
     where: {
       userId: session.user.id,
