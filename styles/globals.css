@@ -297,14 +297,6 @@ input {
   padding-left: 15px;
 }
 
-.manage-feed-input .select span {
-  font-family: "Roboto Slab", serif !important;
-}
-
-.manage-feed-input input {
-  font-size: 12px !important;
-}
-
 #sortable-list {
   position: relative;
 }
