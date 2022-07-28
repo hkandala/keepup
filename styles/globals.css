@@ -43,10 +43,6 @@ input {
   font-family: "Roboto Slab", serif !important;
 }
 
-.dropdown .item {
-  font-family: "Roboto Slab", serif !important;
-}
-
 .center {
   display: flex;
   justify-content: center;
@@ -299,6 +295,14 @@ input {
   opacity: 0.6;
   padding: 10px;
   padding-left: 15px;
+}
+
+.manage-feed-input .select span {
+  font-family: "Roboto Slab", serif !important;
+}
+
+.manage-feed-input input {
+  font-size: 12px !important;
 }
 
 #sortable-list {

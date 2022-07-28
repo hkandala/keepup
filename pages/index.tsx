@@ -76,9 +76,13 @@ export default function Home(props) {
 
 export const getSavedItemHash = (item) =>
   btoa(
-    item.url +
-      "||" +
-      (item.alternativeUrl == null ? "alt" : item.alternativeUrl)
+    unescape(
+      encodeURIComponent(
+        item.url +
+          "||" +
+          (item.alternativeUrl == null ? "alt" : item.alternativeUrl)
+      )
+    )
   );
 
 export const useSavedItems = (savedItemsResponse) => {
