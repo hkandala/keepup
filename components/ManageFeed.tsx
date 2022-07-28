@@ -28,8 +28,7 @@ export default function ManageFeed(props) {
       (document.getElementById("feed-drawer").style.cursor = "grabbing"),
     onStart: () =>
       (document.getElementById("feed-drawer").style.cursor = "grabbing"),
-    onEnd: () =>
-      (document.getElementById("feed-drawer").style.cursor = "grabbing"),
+    onEnd: () => (document.getElementById("feed-drawer").style.cursor = "grab"),
   };
 
   // Create a copy of the props to avoid sortable render issues
