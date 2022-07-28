@@ -43,6 +43,10 @@ input {
   font-family: "Roboto Slab", serif !important;
 }
 
+.dropdown .item {
+  font-family: "Roboto Slab", serif !important;
+}
+
 .center {
   display: flex;
   justify-content: center;
