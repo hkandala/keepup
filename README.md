@@ -1,3 +1,9 @@
+# keepup
+
+Keep up with all tech trends from a single page!
+
+Made for [planetscale](https://planetscale.com/) x [hashnode](https://hashnode.com/) hackathon
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
