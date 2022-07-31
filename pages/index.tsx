@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import SimpleBar from "simplebar-react";
 import { useMediaQuery, useToasts } from "@geist-ui/core";
 import { useSession } from "next-auth/react";
