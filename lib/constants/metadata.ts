@@ -13,7 +13,7 @@ const metadata = {
   favicon32: "/favicon-32x32.png",
   icon192: "/icons/icon-192x192.png",
   appleIcon: "/icons/apple-touch-icon.png",
-  gaId: process.env.GOOGLE_ANALYTICS_ID,
+  gaId: process.env.NEXT_PUBLIC_ANALYTICS_ID,
 };
 
 export default metadata;
