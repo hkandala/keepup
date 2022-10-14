@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
 import ReactGA from "react-ga4";
 import SimpleBar from "simplebar-react";
-import { useMediaQuery, useToasts } from "@geist-ui/core";
+import { Spacer, useMediaQuery, useToasts } from "@geist-ui/core";
 import { useSession } from "next-auth/react";
 
 import { authOptions } from "./api/auth/[...nextauth]";
@@ -15,7 +15,6 @@ import metadata from "../lib/constants/metadata";
 import Metadata from "../components/Metadata";
 import FeedCard from "../components/FeedCard";
 import Menu from "../components/Menu";
-import Footer from "../components/Footer";
 
 export default function Home(props) {
   const isDesktop = useMediaQuery("md", { match: "up" });
@@ -69,7 +68,7 @@ export default function Home(props) {
         </div>
       </SimpleBar>
 
-      <Footer />
+      <Spacer h={2} className="footer-spacer" />
     </>
   );
 }

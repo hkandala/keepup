@@ -43,7 +43,7 @@ function parseResponse(rawHtml: string): NewsItem[] {
 
   try {
     const $ = cheerio.load(rawHtml);
-    const linkList = $(".itemlist .athing .title .titlelink");
+    const linkList = $(".itemlist .athing .title .titleline");
     const subtextList = $(".itemlist .subtext");
 
     linkList.each((index, element) => {

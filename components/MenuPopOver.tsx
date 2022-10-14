@@ -138,21 +138,12 @@ export default function MenuPopOver(props) {
           <Text small>
             As a developer, I regularly visit various websites to stay up to
             date with tech trends. <em>keepup</em> is a simple web app that
-            aggregates links from multiple sources on to a single page. Built as
-            a part of{" "}
-            <a href="https://planetscale.com/" target="_blank" rel="noreferrer">
-              planetscale
-            </a>{" "}
-            x{" "}
-            <a href="https://hashnode.com/" target="_blank" rel="noreferrer">
-              hashnode
-            </a>{" "}
-            hackathon.
+            aggregates links from multiple sources on to a single page.
           </Text>
         </Modal.Content>
         <Modal.Action>
           <a
-            href="https://github.com/hkandala/keep-up"
+            href="https://github.com/hkandala/keepup"
             target="_blank"
             rel="noreferrer"
           >
