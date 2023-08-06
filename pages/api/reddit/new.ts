@@ -5,7 +5,7 @@ import { sendResponse } from "../../../lib/util/api.util";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const { subreddit } = req.query;
   sendResponse(await getRedditNewItems(subreddit as string), res);

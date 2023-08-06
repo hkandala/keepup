@@ -23,7 +23,7 @@ export async function getDevTopItems(duration: Duration): Promise<NewsItem[]> {
 
 async function fetchResponse(
   type: DevListType,
-  duration?: Duration
+  duration?: Duration,
 ): Promise<NewsItem[]> {
   try {
     const response = await Axios.get(generateUrl(type, duration));

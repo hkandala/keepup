@@ -45,7 +45,7 @@ export default function ManageFeed(props) {
   parserIndex.forEach((parser) => (parserMap[parser.id] = parser));
   // add random keys which will be essential for the sortable to work
   feedConfig.forEach(
-    (item) => (item.key = (Math.random() + 1).toString(36).substring(7))
+    (item) => (item.key = (Math.random() + 1).toString(36).substring(7)),
   );
 
   const [newConfig, setNewConfig] = useState(feedConfig);
@@ -263,7 +263,7 @@ export default function ManageFeed(props) {
                     updateNewConfig(
                       "id",
                       sourceOptionsNameToIdMap[value],
-                      itemIndex
+                      itemIndex,
                     )
                   }
                 />
@@ -298,7 +298,7 @@ export default function ManageFeed(props) {
                     updateNewConfig(
                       "endpointIndex",
                       categoryOptionsTypeToIndexMap[item.id][value],
-                      itemIndex
+                      itemIndex,
                     )
                   }
                 />

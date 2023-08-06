@@ -6,33 +6,33 @@ const REDDIT_HOME = "https://www.reddit.com";
 const ITEM_COUNT = 30;
 
 export async function getRedditHotItems(
-  subreddit: string
+  subreddit: string,
 ): Promise<NewsItem[]> {
   return fetchResponse(subreddit, RedditListType.HOT);
 }
 
 export async function getRedditNewItems(
-  subreddit: string
+  subreddit: string,
 ): Promise<NewsItem[]> {
   return fetchResponse(subreddit, RedditListType.NEW);
 }
 
 export async function getRedditRisingItems(
-  subreddit: string
+  subreddit: string,
 ): Promise<NewsItem[]> {
   return fetchResponse(subreddit, RedditListType.RISING);
 }
 
 export async function getRedditTopItems(
   subreddit: string,
-  duration: Duration
+  duration: Duration,
 ): Promise<NewsItem[]> {
   return fetchResponse(subreddit, RedditListType.TOP, duration);
 }
 
 export async function getRedditControversialItems(
   subreddit: string,
-  duration: Duration
+  duration: Duration,
 ): Promise<NewsItem[]> {
   return fetchResponse(subreddit, RedditListType.CONTROVERSIAL, duration);
 }
@@ -40,7 +40,7 @@ export async function getRedditControversialItems(
 async function fetchResponse(
   subreddit: string,
   type: RedditListType,
-  duration?: Duration
+  duration?: Duration,
 ): Promise<NewsItem[]> {
   if (subreddit != undefined) {
     try {
@@ -73,7 +73,7 @@ function transformToNewsItems(resp: any): NewsItem[] {
 function generateUrl(
   subreddit: string,
   type: RedditListType,
-  duration?: Duration
+  duration?: Duration,
 ): string {
   if (subreddit == undefined) {
     return null;

@@ -17,7 +17,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         setThemeType(theme);
       }
     },
-    [themeType]
+    [themeType],
   );
 
   useEffect(() => {

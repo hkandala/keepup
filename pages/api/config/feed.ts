@@ -11,7 +11,7 @@ import indexFunctionList from "../../../lib/constants/index-function-list";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const session = await unstable_getServerSession(req, res, authOptions);
   if (req.method === "GET") {
@@ -76,13 +76,13 @@ export async function updateFeedConfig(session: any, body: any) {
               .max(f().endpoints.length - 1),
           });
         }, Joi.number().required()),
-      })
+      }),
     )
     .unique(
       (a, b) =>
         a.id === b.id &&
         a.categoryName === b.categoryName &&
-        a.endpointIndex === b.endpointIndex
+        a.endpointIndex === b.endpointIndex,
     );
 
   const { error, value } = feedConfigRequestSchema.validate(body);

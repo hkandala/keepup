@@ -16,7 +16,7 @@ export async function getHashnodeRecent(): Promise<NewsItem[]> {
 }
 
 export async function getHashnodeTop(
-  duration: HashnodeDuration
+  duration: HashnodeDuration,
 ): Promise<NewsItem[]> {
   return fetchResponse(HashnodeListType.TOP, null, duration);
 }
@@ -32,7 +32,7 @@ export async function getHashnodeTagNew(tag: string): Promise<NewsItem[]> {
 async function fetchResponse(
   type: HashnodeListType,
   tag?: string,
-  duration?: HashnodeDuration
+  duration?: HashnodeDuration,
 ): Promise<NewsItem[]> {
   try {
     const response = await Axios.get(generateUrl(type, tag, duration));
@@ -64,7 +64,7 @@ function transformToNewsItems(resp: any): NewsItem[] {
 function generateUrl(
   type: HashnodeListType,
   tag?: string,
-  duration?: HashnodeDuration
+  duration?: HashnodeDuration,
 ): string {
   let typeUrl;
   switch (type) {

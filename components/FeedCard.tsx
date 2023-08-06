@@ -38,7 +38,7 @@ export default function FeedCard(props) {
         setItems({ feedItems: [], isFetching: false });
       }
     },
-    [props.endpoints]
+    [props.endpoints],
   );
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function FeedCard(props) {
                 window
                   .open(
                     item.alternativeUrl ? item.alternativeUrl : item.url,
-                    "_blank"
+                    "_blank",
                   )
                   .focus();
               }}

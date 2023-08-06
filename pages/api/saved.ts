@@ -9,7 +9,7 @@ import { Saved } from "../../lib/types/saved.interface";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const session = await unstable_getServerSession(req, res, authOptions);
 
@@ -54,7 +54,7 @@ export async function fetchAllSaved(session: any): Promise<Saved[]> {
         alternativeUrl: item.alternativeUrl,
         createdAt: item.createdAt.valueOf(),
         updatedAt: item.updatedAt.valueOf(),
-      } as Saved)
+      }) as Saved,
   );
 }
 

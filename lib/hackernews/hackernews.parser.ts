@@ -43,11 +43,12 @@ function parseResponse(rawHtml: string): NewsItem[] {
 
   try {
     const $ = cheerio.load(rawHtml);
-    const linkList = $(".itemlist .athing .title .titleline");
-    const subtextList = $(".itemlist .subtext");
+    const linkList = $("#hnmain .athing .title .titleline");
+    const subtextList = $("#hnmain .subtext");
 
     linkList.each((index, element) => {
-      const link = $(element);
+      const wrapper = $(element);
+      const link = wrapper.find("a").first();
       const hasLink = link.next().hasClass("sitebit");
       const subtext = $(subtextList.get(index));
       const commentLink = subtext.find("a").last();

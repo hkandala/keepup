@@ -8,7 +8,7 @@ import { fetchFeedConfig } from "./config/feed";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const session = await unstable_getServerSession(req, res, authOptions);
   return res.json(await dashboardIndex(session));

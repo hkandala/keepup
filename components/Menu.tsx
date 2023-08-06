@@ -25,16 +25,15 @@ export default function Menu(props) {
 
       <Popover
         className="menu"
+        // @ts-ignore
         content={
-          <>
-            <MenuPopOver
-              themeType={props.themeType}
-              setTheme={props.setTheme}
-              parserIndex={props.parserIndex}
-              feedConfig={props.feedConfig}
-              savedItemsHook={props.savedItemsHook}
-            />
-          </>
+          <MenuPopOver
+            themeType={props.themeType}
+            setTheme={props.setTheme}
+            parserIndex={props.parserIndex}
+            feedConfig={props.feedConfig}
+            savedItemsHook={props.savedItemsHook}
+          />
         }
         hideArrow={true}
         placement="bottomEnd"

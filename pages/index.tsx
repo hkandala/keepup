@@ -27,7 +27,11 @@ export default function Home(props) {
   useEffect(() => {
     if (window.location.hostname !== "localhost") {
       ReactGA.initialize(metadata.gaId);
-      ReactGA.pageview(window.location.pathname + window.location.search);
+      ReactGA.send({
+        hitType: "pageview",
+        page: window.location.pathname,
+        title: window.document.title,
+      });
     }
 
     if (!isDesktop) {
@@ -79,9 +83,9 @@ export const getSavedItemHash = (item) =>
       encodeURIComponent(
         item.url +
           "||" +
-          (item.alternativeUrl == null ? "alt" : item.alternativeUrl)
-      )
-    )
+          (item.alternativeUrl == null ? "alt" : item.alternativeUrl),
+      ),
+    ),
   );
 
 export const useSavedItems = (savedItemsResponse) => {
@@ -94,7 +98,7 @@ export const useSavedItems = (savedItemsResponse) => {
     savedItemsResponse.reduce((map, item) => {
       map[getSavedItemHash(item)] = item;
       return map;
-    }, {})
+    }, {}),
   );
   const [savingItems, setSavingItems] = useState({});
 
@@ -193,7 +197,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   const [dashboardIndexData, parserIndexData, feedConfigData, savedItemsData] =

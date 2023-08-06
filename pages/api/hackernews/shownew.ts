@@ -5,7 +5,7 @@ import { sendResponse } from "../../../lib/util/api.util";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   sendResponse(await getShowHNNewItems(), res);
 }

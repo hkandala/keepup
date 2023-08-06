@@ -6,7 +6,7 @@ import { NewsItem } from "../types/news-item.interface";
 
 export function sendResponse(
   apiResponse: NewsItem[],
-  response: NextApiResponse
+  response: NextApiResponse,
 ): void {
   if (apiResponse.length > 0) {
     response.json(apiResponse);
@@ -38,7 +38,7 @@ export function getDurationFromQuery(query: NextApiRequest): Duration {
 
 export function getEndpointListFromSubType(
   subtype: string,
-  endpointList: Endpoint[]
+  endpointList: Endpoint[],
 ): Endpoint[] {
   return endpointList.map((endpoint) => {
     return {

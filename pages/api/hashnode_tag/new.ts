@@ -5,7 +5,7 @@ import { sendResponse } from "../../../lib/util/api.util";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const { tag } = req.query;
   sendResponse(await getHashnodeTagNew(tag as string), res);

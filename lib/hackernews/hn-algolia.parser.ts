@@ -15,7 +15,7 @@ export async function getHNTopItems(duration: Duration): Promise<NewsItem[]> {
   try {
     const response = await Axios.post(
       ALGOLIA_API_URL,
-      getAlgoliaRequestPayload(duration)
+      getAlgoliaRequestPayload(duration),
     );
     return transformToNewsItems(response.data);
   } catch (e) {
