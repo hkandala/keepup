@@ -48,6 +48,7 @@ export default function MenuPopOver(props) {
           icon={<Github />}
           auto
           onClick={() => signIn("github")}
+          placeholder="Github Sign In Button"
         >
           Sign in with Github
         </Button>
@@ -65,6 +66,7 @@ export default function MenuPopOver(props) {
             setSavedDrawerVisibility(true);
           }
         }}
+        placeholder="Saved Button"
       >
         Saved
       </Button>
@@ -80,6 +82,7 @@ export default function MenuPopOver(props) {
             setFeedDrawerVisibility(true);
           }
         }}
+        placeholder="Manage Feed Button"
       >
         Manage Feed
       </Button>
@@ -90,6 +93,7 @@ export default function MenuPopOver(props) {
           className="menu-button"
           auto
           onClick={() => signOut()}
+          placeholder="Log Out Button"
         >
           Sign Out
         </Button>
@@ -104,6 +108,7 @@ export default function MenuPopOver(props) {
           className="menu-button"
           auto
           onClick={() => props.setTheme("dark")}
+          placeholder="Dark Theme Button"
         >
           Dark Theme
         </Button>
@@ -114,6 +119,7 @@ export default function MenuPopOver(props) {
           className="menu-button"
           auto
           onClick={() => props.setTheme("light")}
+          placeholder="Light Theme Button"
         >
           Light Theme
         </Button>
@@ -125,6 +131,7 @@ export default function MenuPopOver(props) {
         className="menu-button remove-text-transform"
         auto
         onClick={() => setVisible(true)}
+        placeholder="Info Button"
       >
         About <em>&nbsp;keepup</em>
       </Button>
@@ -141,7 +148,7 @@ export default function MenuPopOver(props) {
             aggregates links from multiple sources on to a single page.
           </Text>
         </Modal.Content>
-        <Modal.Action>
+        <Modal.Action placeholder="Action">
           <a
             href="https://github.com/hkandala/keepup"
             target="_blank"
@@ -150,7 +157,7 @@ export default function MenuPopOver(props) {
             <Github />
           </a>
         </Modal.Action>
-        <Modal.Action>
+        <Modal.Action placeholder="Action">
           <a
             href="https://www.buymeacoffee.com/hkandala"
             target="_blank"
@@ -159,7 +166,7 @@ export default function MenuPopOver(props) {
             <Coffee />
           </a>
         </Modal.Action>
-        <Modal.Action>
+        <Modal.Action placeholder="Action">
           <a href="https://hkandala.dev/" target="_blank" rel="noreferrer">
             <Emoji />
           </a>

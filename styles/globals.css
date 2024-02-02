@@ -1,5 +1,5 @@
 @import "./fonts.css";
-@import "~simplebar/dist/simplebar.min.css";
+@import "~simplebar-react/dist/simplebar.min.css";
 
 .simplebar-content-wrapper {
   scroll-snap-type: x mandatory;

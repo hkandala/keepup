@@ -266,6 +266,7 @@ export default function ManageFeed(props) {
                       itemIndex,
                     )
                   }
+                  crossOrigin={undefined}
                 />
                 {parserMap[item.id]?.categoryName ? (
                   <Input
@@ -274,6 +275,7 @@ export default function ManageFeed(props) {
                     onBlur={(e) =>
                       updateNewConfig("categoryName", e.target.value, itemIndex)
                     }
+                    crossOrigin={undefined}
                   />
                 ) : (
                   <></>
@@ -301,6 +303,7 @@ export default function ManageFeed(props) {
                       itemIndex,
                     )
                   }
+                  crossOrigin={undefined}
                 />
               </div>
               <div
@@ -325,6 +328,7 @@ export default function ManageFeed(props) {
           type="secondary"
           loading={saving}
           onClick={saveChanges}
+          placeholder="Save Button"
         >
           Save
         </Button>

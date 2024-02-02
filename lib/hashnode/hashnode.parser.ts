@@ -50,8 +50,8 @@ function transformToNewsItems(resp: any): NewsItem[] {
         url: item.publicationDomain
           ? `https://${item.publicationDomain}/${item.slug}`
           : item.publication.domain
-          ? `https://${item.publication.domain}/${item.slug}`
-          : `https://${item.publication.username}.hashnode.dev/${item.slug}`,
+            ? `https://${item.publication.domain}/${item.slug}`
+            : `https://${item.publication.username}.hashnode.dev/${item.slug}`,
         alternativeUrl: null,
         description: item.brief,
         score: item.totalReactions,

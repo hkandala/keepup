@@ -106,6 +106,7 @@ export default function FeedCard(props) {
               title={item.title}
               target="_blank"
               rel="noreferrer"
+              placeholder="link"
             >
               <Text small>{item.title}</Text>
             </Link>
