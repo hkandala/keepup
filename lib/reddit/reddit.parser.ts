@@ -127,7 +127,7 @@ async function getRedditSubmissions(
     case RedditListType.CONTROVERSIAL:
       return await reddit
         .getSubreddit(subreddit)
-        .getControversial({ limit: ITEM_COUNT });
+        .getControversial({ limit: ITEM_COUNT, time: time });
     case RedditListType.TOP:
       return await reddit
         .getSubreddit(subreddit)
