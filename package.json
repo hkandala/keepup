@@ -39,6 +39,7 @@
     "react-ga4": "^2.1.0",
     "react-sortablejs": "^6.1.4",
     "simplebar-react": "^3.2.4",
+    "snoowrap": "^1.23.0",
     "sortablejs": "^1.15.2"
   },
   "devDependencies": {

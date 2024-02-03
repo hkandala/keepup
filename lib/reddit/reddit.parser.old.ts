@@ -1,18 +1,9 @@
-import Snoowrap from "snoowrap";
-
+import Axios from "axios";
 import { Duration } from "../types/duration.enum";
 import { NewsItem } from "../types/news-item.interface";
 
 const REDDIT_HOME = "https://www.reddit.com";
 const ITEM_COUNT = 30;
-
-const reddit = new Snoowrap({
-  userAgent: process.env.REDDIT_USER_AGENT,
-  clientId: process.env.REDDIT_CLIENT_ID,
-  clientSecret: process.env.REDDIT_CLIENT_SECRET,
-  username: process.env.REDDIT_USERNAME,
-  password: process.env.REDDIT_PASSWORD,
-});
 
 export async function getRedditHotItems(
   subreddit: string,
@@ -53,9 +44,8 @@ async function fetchResponse(
 ): Promise<NewsItem[]> {
   if (subreddit != undefined) {
     try {
-      return transformToNewsItems(
-        await getRedditSubmissions(subreddit, type, duration),
-      );
+      const response = await Axios.get(generateUrl(subreddit, type, duration));
+      return transformToNewsItems(response.data);
     } catch (e) {
       console.error("Error while fetching data from Reddit API", e);
     }
@@ -63,77 +53,81 @@ async function fetchResponse(
   return [];
 }
 
-function transformToNewsItems(
-  response: Snoowrap.Listing<Snoowrap.Submission>,
-): NewsItem[] {
-  if (response != undefined) {
-    return response
-      .filter((item) => !item.stickied)
+function transformToNewsItems(resp: any): NewsItem[] {
+  if (resp?.data?.children) {
+    return resp.data.children
+      .filter((item) => !item.data.stickied)
       .map((item) => {
         return {
-          title: item.title,
-          url: item.url,
-          alternativeUrl: REDDIT_HOME + item.permalink,
-          description: item.selftext,
-          score: item.score,
+          title: item.data.title,
+          url: item.data.url,
+          alternativeUrl: REDDIT_HOME + item.data.permalink,
+          description: item.data.selftext,
+          score: item.data.score,
         } as NewsItem;
       });
   }
   return [];
 }
 
-async function getRedditSubmissions(
+function generateUrl(
   subreddit: string,
   type: RedditListType,
   duration?: Duration,
-): Promise<Snoowrap.Listing<Snoowrap.Submission>> {
+): string {
   if (subreddit == undefined) {
     return null;
   }
 
-  let time;
-  switch (duration) {
-    case Duration.HOUR:
-      time = "hour";
-      break;
-    case Duration.DAY:
-      time = "day";
-      break;
-    case Duration.WEEK:
-      time = "week";
-      break;
-    case Duration.MONTH:
-      time = "month";
-      break;
-    case Duration.YEAR:
-      time = "year";
-      break;
-    case Duration.ALL:
-      time = "all";
-      break;
-    default:
-      time = "day";
-  }
-
+  let typeUrl;
   switch (type) {
     case RedditListType.HOT:
-      return await reddit.getSubreddit(subreddit).getHot({ limit: ITEM_COUNT });
+      typeUrl = "hot";
+      break;
     case RedditListType.NEW:
-      return await reddit.getSubreddit(subreddit).getNew({ limit: ITEM_COUNT });
+      typeUrl = "new";
+      break;
     case RedditListType.RISING:
-      return await reddit
-        .getSubreddit(subreddit)
-        .getRising({ limit: ITEM_COUNT });
+      typeUrl = "rising";
+      break;
     case RedditListType.CONTROVERSIAL:
-      return await reddit
-        .getSubreddit(subreddit)
-        .getControversial({ limit: ITEM_COUNT });
+      typeUrl = "controversial";
+      break;
     case RedditListType.TOP:
-      return await reddit
-        .getSubreddit(subreddit)
-        .getTop({ limit: ITEM_COUNT, time: time });
+      typeUrl = "top";
+      break;
     default:
-      return await reddit.getSubreddit(subreddit).getHot({ limit: ITEM_COUNT });
+      typeUrl = "hot";
+  }
+
+  let durationUrl;
+  switch (duration) {
+    case Duration.HOUR:
+      durationUrl = "hour";
+      break;
+    case Duration.DAY:
+      durationUrl = "day";
+      break;
+    case Duration.WEEK:
+      durationUrl = "week";
+      break;
+    case Duration.MONTH:
+      durationUrl = "month";
+      break;
+    case Duration.YEAR:
+      durationUrl = "year";
+      break;
+    case Duration.ALL:
+      durationUrl = "all";
+      break;
+    default:
+      durationUrl = "day";
+  }
+
+  if (RedditListType.TOP || RedditListType.CONTROVERSIAL) {
+    return `${REDDIT_HOME}/r/${subreddit}/${typeUrl}.json?t=${durationUrl}&limit=${ITEM_COUNT}`;
+  } else {
+    return `${REDDIT_HOME}/r/${subreddit}/${typeUrl}.json?limit=${ITEM_COUNT}`;
   }
 }
 
