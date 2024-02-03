@@ -26,8 +26,12 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <Analytics />
-          <SpeedInsights />
+          {process && process.env.NODE_ENV !== "development" && (
+            <>
+              <Analytics />
+              <SpeedInsights />
+            </>
+          )}
         </body>
       </Html>
     );

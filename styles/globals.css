@@ -1,5 +1,6 @@
-@import "./fonts.css";
 @import "~simplebar-react/dist/simplebar.min.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&family=Sansita+Swashed:wght@800&display=swap");
 
 .simplebar-content-wrapper {
   scroll-snap-type: x mandatory;

@@ -10,10 +10,10 @@ export default Themes.createFromLight({
     border: "#e0e0e0",
   },
   expressiveness: {
-    dropdownBoxShadow: "0 0 0 1px #bdbdbd",
-    shadowSmall: "0 0 0 1px #bdbdbd",
-    shadowMedium: "0 0 0 1px #bdbdbd",
-    shadowLarge: "0 0 0 1px #bdbdbd",
+    dropdownBoxShadow: "0 0 0 2px #e0e0e0",
+    shadowSmall: "0 0 0 2px #e0e0e0",
+    shadowMedium: "0 0 0 2px #e0e0e0",
+    shadowLarge: "0 0 0 2px #e0e0e0",
     portalOpacity: 0.75,
   },
 });
