@@ -107,6 +107,8 @@ export default function FeedCard(props) {
               target="_blank"
               rel="noreferrer"
               placeholder="link"
+              onPointerEnterCapture={() => {}}
+              onPointerLeaveCapture={() => {}}
             >
               <Text small>{item.title}</Text>
             </Link>
@@ -163,6 +165,8 @@ export default function FeedCard(props) {
           scale={0.6}
           className="select-wrapper"
           disableMatchWidth
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
         >
           {props.endpoints.map((endpoint, index) => (
             <Select.Option value={index.toString()} key={index}>

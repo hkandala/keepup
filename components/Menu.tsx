@@ -8,7 +8,13 @@ import MenuPopOver from "../components/MenuPopOver";
 export default function Menu(props) {
   return (
     <>
-      <Link href="/" className="logo" placeholder="keepup logo">
+      <Link
+        href="/"
+        className="logo"
+        placeholder="keepup logo"
+        onPointerEnterCapture={() => {}}
+        onPointerLeaveCapture={() => {}}
+      >
         <Image
           src="/icons/icon-192x192.png"
           width={32}

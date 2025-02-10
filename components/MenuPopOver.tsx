@@ -49,6 +49,8 @@ export default function MenuPopOver(props) {
           auto
           onClick={() => signIn("github")}
           placeholder="Github Sign In Button"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
         >
           Sign in with Github
         </Button>
@@ -67,6 +69,8 @@ export default function MenuPopOver(props) {
           }
         }}
         placeholder="Saved Button"
+        onPointerEnterCapture={() => {}}
+        onPointerLeaveCapture={() => {}}
       >
         Saved
       </Button>
@@ -83,6 +87,8 @@ export default function MenuPopOver(props) {
           }
         }}
         placeholder="Manage Feed Button"
+        onPointerEnterCapture={() => {}}
+        onPointerLeaveCapture={() => {}}
       >
         Manage Feed
       </Button>
@@ -94,6 +100,8 @@ export default function MenuPopOver(props) {
           auto
           onClick={() => signOut()}
           placeholder="Log Out Button"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
         >
           Sign Out
         </Button>
@@ -109,6 +117,8 @@ export default function MenuPopOver(props) {
           auto
           onClick={() => props.setTheme("dark")}
           placeholder="Dark Theme Button"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
         >
           Dark Theme
         </Button>
@@ -120,6 +130,8 @@ export default function MenuPopOver(props) {
           auto
           onClick={() => props.setTheme("light")}
           placeholder="Light Theme Button"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
         >
           Light Theme
         </Button>
@@ -132,6 +144,8 @@ export default function MenuPopOver(props) {
         auto
         onClick={() => setVisible(true)}
         placeholder="Info Button"
+        onPointerEnterCapture={() => {}}
+        onPointerLeaveCapture={() => {}}
       >
         About <em>&nbsp;keepup</em>
       </Button>
@@ -148,7 +162,11 @@ export default function MenuPopOver(props) {
             aggregates links from multiple sources on to a single page.
           </Text>
         </Modal.Content>
-        <Modal.Action placeholder="Action">
+        <Modal.Action
+          placeholder="Action"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
+        >
           <a
             href="https://github.com/hkandala/keepup"
             target="_blank"
@@ -157,7 +175,11 @@ export default function MenuPopOver(props) {
             <Github />
           </a>
         </Modal.Action>
-        <Modal.Action placeholder="Action">
+        <Modal.Action
+          placeholder="Action"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
+        >
           <a
             href="https://www.buymeacoffee.com/hkandala"
             target="_blank"
@@ -166,7 +188,11 @@ export default function MenuPopOver(props) {
             <Coffee />
           </a>
         </Modal.Action>
-        <Modal.Action placeholder="Action">
+        <Modal.Action
+          placeholder="Action"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
+        >
           <a href="https://hkandala.dev/" target="_blank" rel="noreferrer">
             <Emoji />
           </a>
