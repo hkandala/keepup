@@ -4,9 +4,9 @@ import { getTime, sub } from "date-fns";
 import { Duration } from "../types/duration.enum";
 import { NewsItem } from "../types/news-item.interface";
 
-const ALGOLIA_API_KEY = "8ece23f8eb07cd25d40262a1764599b1";
+const ALGOLIA_API_KEY = "28f0e1ec37a5e792e6845e67da5f20dd";
 const ALGOLIA_APPLICATION_ID = "UJ5WYC0L7X";
-const ALGOLIA_API_URL = `https://uj5wyc0l7x-dsn.algolia.net/1/indexes/Item_production_ordered/query?x-algolia-api-key=${ALGOLIA_API_KEY}&x-algolia-application-id=${ALGOLIA_APPLICATION_ID}`;
+const ALGOLIA_API_URL = `https://uj5wyc0l7x-dsn.algolia.net/1/indexes/Item_dev/query?x-algolia-api-key=${ALGOLIA_API_KEY}&x-algolia-application-id=${ALGOLIA_APPLICATION_ID}`;
 
 const HACKERNEWS_COMMENT_URL_PREFIX = "https://news.ycombinator.com/item?id=";
 const ITEM_COUNT = 30;
